@@ -1,50 +1,53 @@
+@foreach($certificate as $cert)
 <div class="input-split">
     <div class="col-lg-6">
+        <input type="text" id="id" value="{{$cert->id}}" hidden>
         <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" placeholder="Name">
+            <input type="text" class="form-control" id="name" value="{{$cert->name}}" placeholder="Name">
         </div>
         <div class="form-group">
             <label for="type">Type</label>
-            <input type="text" class="form-control" id="type" placeholder="Type">
+            <input type="text" class="form-control" id="type" value="{{$cert->type}}" placeholder="Type">
         </div>
         <div class="form-group">
             <label for="title">Title</label>
-            <input type="text" class="form-control" id="title" placeholder="Title">
+            <input type="text" class="form-control" id="title" value="{{$cert->title}}" placeholder="Title">
         </div>
         <div class="form-group">
             <label for="address">Address</label>
-            <textarea class="form-control" id="address" rows="4" placeholder="Address"></textarea>
+            <textarea class="form-control" id="address" rows="4" placeholder="Address"> {{$cert->address}} </textarea>
         </div>
         <div class="form-group">
             <label for="scope">Scope</label>
-            <textarea class="form-control" id="scope" rows="4" placeholder="Scope"></textarea>
+            <textarea class="form-control" id="scope" rows="4" placeholder="Scope">{{$cert->scope}} </textarea>
         </div>
     </div>
     <div class="col-lg-6">
         <div class="form-group">
             <label for="effective">Effective</label>
-            <input type="date" class="form-control" id="effective">
+            <input type="date" class="form-control" id="effective" value="{{$cert->effective}}">
         </div>
         <div class="form-group">
             <label for="surveillance_1">Surveillance 1</label>
-            <input type="date" class="form-control" id="surveillance_1">
+            <input type="date" class="form-control" id="surveillance_1" value="{{$cert->surveillance_1}}">
         </div>
         <div class="form-group">
             <label for="surveillance_2">Surveillance 2</label>
-            <input type="date" class="form-control" id="surveillance_2">
+            <input type="date" class="form-control" id="surveillance_2" value="{{$cert->surveillance_2}}">
         </div>
         <div class="form-group">
             <label for="date">date</label>
-            <input type="date" class="form-control" id="date">
+            <input type="date" class="form-control" id="date" value="{{$cert->date}}">
         </div>
-        <button type="submit" class="btn btn-primary mr-2" id="send">Submit</button>
+        <button type="submit" class="btn btn-primary mr-2" id="update">Submit</button>
         <button class="btn btn-dark">Cancel</button>
     </div>
 </div>
-
+@endforeach
 <script>
-    $('#send').click(function() {
+    $('#update').click(function() {
+        const id = $('#id').val();
         const name = $('#name').val();
         const type = $('#type').val();
         const title = $('#title').val();
@@ -55,7 +58,7 @@
         const surveillance_2 = $('#surveillance_2').val();
         const date = $('#date').val();
 
-        axios.post('/certificate/send', {
+        axios.post('/certificate/sendUpdate/' + id, {
             name,
             type,
             title,

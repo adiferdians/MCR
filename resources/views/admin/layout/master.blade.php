@@ -17,12 +17,22 @@
 
   <!-- Add jQuery Library -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Include jQuery (required for Bootstrap) -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Include Popper.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+  <!-- Include Bootstrap JS -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
   <!-- Add Axios CDN-->
   <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 
-  <!-- Add Bootstrap-->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+  <!-- sweet alert -->
+  <link href="https://cdn.jsdelivr.net/npm/@sweetalert2/theme-dark@4/dark.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 </head>
 
 <body>
@@ -122,6 +132,21 @@
       <div class="modal" tabindex="-1" id="myModal">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal end -->
+
+      <!-- modal start -->
+      <div class="modal" tabindex="-1" id="modalSmall">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content" style="width: fit-content;">
             <div class="modal-header">
               <h5 class="modal-title"></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>

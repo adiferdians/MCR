@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\certificate;
+use Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Http\Request;
 
 class CertificateController extends Controller
@@ -34,7 +36,6 @@ class CertificateController extends Controller
             'surveillance_1'   => 'required',
             'surveillance_2'   => 'required',
             'date'   => 'required',
-            'status'   => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -85,15 +86,16 @@ class CertificateController extends Controller
             $data = [
                 'name' => $request->name,
                 'title' => $request->title,
-                'sub_title' => $request->subTitle,
+                'type' => $request->type,
                 'address' => $request->address,
                 'scope' => $request->scope,
                 'number' => "M-CB/".$code . "/" . $bulan_romawi . "/" . $tahun,
                 'number_convert' => "M-CB". $code . $bulan_romawi . $tahun,
-                'expired' => $request->expired,
+                'effective' => $request->effective,
+                'surveillance_1' => $request->surveillance_1,
+                'surveillance_2' => $request->surveillance_2,
                 'date' => $request->date,
                 'status' => "draft",
-                'iso' => 9,
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ];
@@ -107,6 +109,108 @@ class CertificateController extends Controller
 
             return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
         }
+    }
+
+    public function getUpdate($id)
+    {
+        $certificate = certificate::where('id', $id)->get();
+        return view('admin.certificate.certificateUpdate', [
+            'certificate' => $certificate
+        ]);
+    }
+
+    public function sendUpdate(Request $request, $id)
+    {
+        $validate = Validator::make($request->all(), [
+            'name'   => 'required',
+            'title'   => 'required',
+            'type'   => 'required',
+            'address'   => 'required',
+            'scope'   => 'required',
+            'effective'   => 'required',
+            'surveillance_1'   => 'required',
+            'surveillance_2'   => 'required',
+            'date'   => 'required',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'messages' => $validate->messages()
+            ], 422);
+        }
+        DB::beginTransaction();
+        try {
+            $data = [
+                'name' => $request->name,
+                'title' => $request->title,
+                'type' => $request->type,
+                'address' => $request->address,
+                'scope' => $request->scope,
+                'effective' => $request->effective,
+                'surveillance_1' => $request->surveillance_1,
+                'surveillance_2' => $request->surveillance_2,
+                'date' => $request->date,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ];
+
+            certificate::where('id', $id)->update($data);
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan', 'data' => $data], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
+        }
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        $validate = Validator::make($request->all(), [
+            'status'   => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'messages' => $validate->messages()
+            ], 422);
+        }
+        DB::beginTransaction();
+        try {
+            $data = [
+                'status' => $request->status,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ];
+
+            certificate::where('id', $id)->update($data);
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Status berhasil diubah', 'data' => $data], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
+        }
+    }
+
+    public function generateQrCode($number)
+    {
+        $qrCode = QrCode::format('svg')
+            ->size(1000)
+            ->errorCorrection('H')
+            ->generate(url("/verifikasi/" . $number));
+
+        return response()->json([
+            'DATA' => base64_encode($qrCode)
+        ]);
+    }
+
+    public function delete($id)
+    {
+        $data = new certificate();
+        $data->where('id', $id)->delete();
     }
 }
  

@@ -13,11 +13,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-new">
-                            <a class="nav-link btn btn-success create-new-button" style="width: fit-content;" 
-                            id="addCertificate" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Certificate</a>
+                            <a class="nav-link btn btn-success create-new-button" style="width: fit-content;" id="addCertificate" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Certificate</a>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-hover">
+                            <table class="table table-hover" style="text-align: center;">
                                 <thead>
                                     <tr>
                                         <th>ACTION</th>
@@ -47,8 +46,8 @@
                                 @foreach($data as $certificate)
                                 <tbody>
                                     <tr>
-                                        <td style="vertical-align: middle;">
-                                            <div style="display: flex;">
+                                        <td>
+                                            <div style="display: flex; justify-content: center;">
                                                 <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updCertificate({{$certificate->id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
@@ -74,7 +73,9 @@
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
                                                     <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('active', '{{$certificate->id}}')">Active</button>
+                                                    <div class="dropdown-divider"></div>
                                                     <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('withdraw', '{{$certificate->id}}')">Withdraw</button>
+                                                    <div class="dropdown-divider"></div>
                                                     <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('suspended', '{{$certificate->id}}')">suspended</button>
                                                 </div>
                                             </div>
@@ -98,18 +99,137 @@
 
 
 <script>
+    function changeStatus(status, id) {
+        Swal.fire({
+            title: 'Are you sure you want to change the certificate status?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Change'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    axios.post('/certificate/changeStatus/' + id, {
+                            status,
+                        }).then(() => {
+                            Swal.fire({
+                                title: 'Success',
+                                position: 'top-end',
+                                icon: 'success',
+                                text: 'Status Changed!',
+                                showConfirmButton: false,
+                                width: '400px',
+                                timer: 1500
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1600);
+                        })
+                        .catch((err) => {
+                            Swal.fire({
+                                title: 'Error',
+                                position: 'top-end',
+                                icon: 'error',
+                                text: err,
+                                showConfirmButton: false,
+                                width: '400px',
+                                timer: 1500
+                            });
+                        });
+                }
+            }
+        })
+    };
+
+    function showQrCode(number, name, id) {
+        let newNumber = number.replace(new RegExp("/", "g"), "");
+
+        axios.get(`/certificate/qrcode/${newNumber}`)
+            .then(function({
+                data
+            }) {
+                $('.modal-title').html(`${name}`);
+                $('.modal-body').html(`<div class='text-center'>
+                <div>
+                    <img width='300' height='auto' src='data:image/svg+xml;base64,${data.DATA}' />
+                </div><br>
+                    <div>
+                        <a href='data:image/svg+xml;base64,${data.DATA}' class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" download=${name}>
+                        <i class="fas fa-download"></i>  Download QR Code</a>
+                    </div>
+                </div>`);
+                $('#modalSmall').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
 
     $('#addCertificate').click(function() {
-            axios.get('/certificate/create')
-                .then(function(response) {
-                    $('.modal-title').html("Add New Certificate");
-                    $('.modal-body').html(response.data);
-                    $('#myModal').modal('show');
-                })
-                .catch(function(error) {
-                    console.log(error);
-                });
-        })
+        axios.get('/certificate/create')
+            .then(function(response) {
+                $('.modal-title').html("Add New Certificate");
+                $('.modal-body').html(response.data);
+                $('#myModal').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    })
+
+    function updCertificate(id) {
+        axios.get('/certificate/getUpdate/' + id)
+            .then(function(response) {
+                $('.modal-title').html("Update Certificate");
+                $('.modal-body').html(response.data);
+                $('#myModal').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+
+    function delCertificate(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "The deleted data cannot be recovered!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancle',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/certificate/delete/' + id)
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Success',
+                            position: 'top-end',
+                            icon: 'success',
+                            text: 'Data deleted successfuly!',
+                            showConfirmButton: false,
+                            width: '400px',
+                            timer: 1500
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1600);
+                    })
+                    .catch((err) => {
+                        Swal.fire({
+                            title: 'Error',
+                            position: 'top-end',
+                            icon: 'error',
+                            text: err,
+                            showConfirmButton: false,
+                            width: '400px',
+                            timer: 1500
+                        });
+                    });
+            }
+        });
+    }
 </script>
 
 @endsection

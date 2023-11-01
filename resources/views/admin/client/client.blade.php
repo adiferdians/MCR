@@ -19,44 +19,57 @@
                             <table class="table table-hover">
                                 <thead>
                                     <tr>
-                                        <th>User</th>
-                                        <th>Product</th>
-                                        <th>Sale</th>
-                                        <th>Status</th>
+                                        <th>ACTION</th>
+                                        <th>NAME</th>
+                                        <th>COMPANY</th>
+                                        <th>ADDRESS</th>
+                                        <th>TELEPHONE</th>
+                                        <th>PIC</th>
+                                        <th>PIC CONTACT</th>
+                                        <th>SERVICE</th>
+                                        <th>SERVICE DETIL</th>
                                     </tr>
                                 </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>ACTION</th>
+                                        <th>NAME</th>
+                                        <th>COMPANY</th>
+                                        <th>ADDRESS</th>
+                                        <th>TELEPHONE</th>
+                                        <th>PIC</th>
+                                        <th>PIC CONTACT</th>
+                                        <th>SERVICE</th>
+                                        <th>SERVICE DETIL</th>
+                                    </tr>
+                                </tfoot>
+                                @foreach($client as $clients)
                                 <tbody>
                                     <tr>
-                                        <td>Jacob</td>
-                                        <td>Photoshop</td>
-                                        <td class="text-danger"> 28.76% <i class="mdi mdi-arrow-down"></i></td>
-                                        <td><label class="badge badge-danger">Pending</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Messsy</td>
-                                        <td>Flash</td>
-                                        <td class="text-danger"> 21.06% <i class="mdi mdi-arrow-down"></i></td>
-                                        <td><label class="badge badge-warning">In progress</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td>John</td>
-                                        <td>Premier</td>
-                                        <td class="text-danger"> 35.00% <i class="mdi mdi-arrow-down"></i></td>
-                                        <td><label class="badge badge-info">Fixed</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Peter</td>
-                                        <td>After effects</td>
-                                        <td class="text-success"> 82.00% <i class="mdi mdi-arrow-up"></i></td>
-                                        <td><label class="badge badge-success">Completed</label></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Dave</td>
-                                        <td>53275535</td>
-                                        <td class="text-success"> 98.05% <i class="mdi mdi-arrow-up"></i></td>
-                                        <td><label class="badge badge-warning">In progress</label></td>
+                                        <td>
+                                            <div>
+                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updCertificate({{$clients->id}})">
+                                                    <i class="mdi mdi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="showQrCode('{{$clients->number}}', '{{$clients->name}}', '{{$clients->id}}')">
+                                                    <i class="mdi mdi-eye"></i>
+                                                </button>
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delCertificate({{$clients->id}})">
+                                                    <i class="mdi mdi-delete-forever"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td>{{$clients->name}}</td>
+                                        <td>{{$clients->company_name}}</td>
+                                        <td>{{$clients->address}}</td>
+                                        <td>{{$clients->company_contact}}</td>
+                                        <td>{{$clients->pic}}</td>
+                                        <td>{{$clients->pic_contact}}</td>
+                                        <td>{{$clients->service}}</td>
+                                        <td>{{$clients->service_detil}}</td>
                                     </tr>
                                 </tbody>
+                                @endforeach
                             </table>
                         </div>
                     </div>
