@@ -1,4 +1,34 @@
-.add-new{
+.add-new {
     display: flex;
     flex-direction: row-reverse;
+}
+
+.actBtn {
+    margin: 2px;
+}
+
+.status {
+    width: max-content;
+}
+
+.table-responsive {
+    display: block;
+    width: -webkit-fill-available;
+    overflow-x: hidden;
+}
+
+.page-link{
+    color: white;
+    border: none;
+    margin: 1px;
+    border-radius: 3px;
+}
+
+.pagination{
+    padding-top: 20px;
+    justify-content: flex-end;
+}
+
+.input-split{
+    display: flex;
 }

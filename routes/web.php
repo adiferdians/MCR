@@ -24,4 +24,5 @@ Route::post('login', [AuthController::class, 'Auth']);
 
 Route::get('dashboard', [DashboardController::class, 'dashboard']);
 Route::get('certificate', [CertificateController::class, 'index']);
+Route::get('certificate/create', [CertificateController::class, 'create']);
 Route::get('client', [ClientController::class, 'index']);
