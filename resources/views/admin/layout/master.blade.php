@@ -129,7 +129,7 @@
       </nav>
 
       <!-- modal start -->
-      <div class="modal" tabindex="-1" id="myModal">
+      <div class="modal" tabindex="-1" id="myModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header">

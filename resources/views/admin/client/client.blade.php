@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-new">
-                            <a class="nav-link btn btn-success create-new-button" style="width: fit-content;" id="createbuttonDropdown" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Client</a>
+                            <a class="nav-link btn btn-success create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false">+ Create New Client</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover">
@@ -78,5 +78,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#addClient').click(function() {
+        axios.get('/client/create')
+            .then(function(response) {
+                $('.modal-title').html("Add New Certificate");
+                $('.modal-body').html(response.data);
+                $('#myModal').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    })
+</script>
 
 @endsection

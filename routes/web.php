@@ -29,6 +29,7 @@ Route::post('certificate/send', [CertificateController::class, 'send']);
 Route::get('certificate/getUpdate/{id}', [CertificateController::class, 'getUpdate']);
 Route::post('certificate/sendUpdate/{id}', [CertificateController::class, 'sendUpdate']);
 Route::post('certificate/changeStatus/{id}', [CertificateController::class, 'changeStatus']);
-Route::get('/certificate/qrcode/{number}', [CertificateController::class, 'generateQrCode'])->name('generateQrcode');
+Route::get('certificate/qrcode/{number}', [CertificateController::class, 'generateQrCode'])->name('generateQrcode');
 Route::post('certificate/delete/{id}', [CertificateController::class, 'delete']);
+Route::get('client/create', [ClientController::class, 'create']);
 Route::get('client', [ClientController::class, 'index']);

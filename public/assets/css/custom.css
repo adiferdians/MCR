@@ -17,22 +17,22 @@
     overflow-x: hidden;
 }
 
-.page-link{
+.page-link {
     color: white;
     border: none;
     margin: 1px;
     border-radius: 3px;
 }
 
-.pagination{
+.pagination {
     padding-top: 20px;
     justify-content: flex-end;
 }
 
-.input-split{
+.input-split {
     display: flex;
 }
 
-.form-control{
+.form-control {
     color: wheat;
 }
