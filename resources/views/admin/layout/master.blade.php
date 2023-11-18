@@ -81,9 +81,6 @@
           <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
         </div>
         <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-          <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-            <span class="mdi mdi-menu"></span>
-          </button>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown">
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
@@ -134,7 +131,7 @@
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" id="modalClose" aria-label="Close"></button>
             </div>
             <div class="modal-body">
             </div>
@@ -149,7 +146,7 @@
           <div class="modal-content" style="width: fit-content;">
             <div class="modal-header">
               <h5 class="modal-title"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" id="modalCloseSM" aria-label="Close"></button>
             </div>
             <div class="modal-body">
             </div>
