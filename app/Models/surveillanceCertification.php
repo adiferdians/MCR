@@ -5,14 +5,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Client extends Model
+class surveillanceCertification extends Model
 {
     use HasFactory;
-    protected $table = 'clients';
-
+    protected $table = 'surveillance_certifications';
     protected $guarded = [];
-    public function detil_certifications()
+    public function detil()
     {
-        return $this->hasMany('App\Models\detilCertification');
+        return $this->hasOne('App\Models\detilCertification');
     }
 }

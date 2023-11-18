@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('clients', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('id_company');
+            $table->id('client_id');
+            $table->unsignedBigInteger('service_id');
+            $table->foreign('service_id')->references('service_id')->on('service_certifications')->onDelete('CASCADE');
             $table->string('company_name');
             $table->text('address');
             $table->string('company_contact');

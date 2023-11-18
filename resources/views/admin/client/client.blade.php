@@ -20,27 +20,31 @@
                                 <thead>
                                     <tr>
                                         <th>ACTION</th>
-                                        <th>NAME</th>
                                         <th>COMPANY</th>
-                                        <th>ADDRESS</th>
-                                        <th>TELEPHONE</th>
+                                        <th>CONTACT</th>
                                         <th>PIC</th>
-                                        <th>PIC CONTACT</th>
-                                        <th>SERVICE</th>
-                                        <th>SERVICE DETIL</th>
+                                        <th>AGENCY</th>
+                                        <th>NOTES</th>
+                                        <th>SRVLC 1</th>
+                                        <th>SRVLC 2</th>
+                                        <th>COUNT</th>
+                                        <th>NOTIFICATION</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>ACTION</th>
-                                        <th>NAME</th>
                                         <th>COMPANY</th>
-                                        <th>ADDRESS</th>
-                                        <th>TELEPHONE</th>
+                                        <th>CONTACT</th>
                                         <th>PIC</th>
-                                        <th>PIC CONTACT</th>
-                                        <th>SERVICE</th>
-                                        <th>SERVICE DETIL</th>
+                                        <th>AGENCY</th>
+                                        <th>NOTES</th>
+                                        <th>SRVLC 1</th>
+                                        <th>SRVLC 2</th>
+                                        <th>COUNT</th>
+                                        <th>NOTIFICATION</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </tfoot>
                                 @foreach($client as $clients)
@@ -59,14 +63,29 @@
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>{{$clients->name}}</td>
                                         <td>{{$clients->company_name}}</td>
-                                        <td>{{$clients->address}}</td>
                                         <td>{{$clients->company_contact}}</td>
                                         <td>{{$clients->pic}}</td>
-                                        <td>{{$clients->pic_contact}}</td>
-                                        <td>{{$clients->service}}</td>
-                                        <td>{{$clients->service_detil}}</td>
+                                        <td>{{$clients->agency}}</td>
+                                        <td>{{$clients->notes}}</td>
+                                        <td>{{$clients->surveillance_1}}</td>
+                                        <td>{{$clients->surveillance_2}}</td>
+                                        <td>{{$clients->count}}</td>
+                                        <td>{{$clients->notification}}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn {{ $clients->status == 'active' ? 'btn-success' : ($clients->status == 'withdraw' ? 'btn-info' : 'btn-warning') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    {{$clients->status}}
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
+                                                    <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('active', '{{$clients->client_id}}')">Active</button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('withdraw', '{{$clients->client_id}}')">Withdraw</button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('suspended', '{{$clients->client_id}}')">suspended</button>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 @endforeach
@@ -90,6 +109,10 @@
             .catch(function(error) {
                 console.log(error);
             });
+    })
+
+    $("#modalClose").click(function() {
+        $('#myModal').modal('hide');
     })
 </script>
 
