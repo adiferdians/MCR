@@ -52,7 +52,7 @@
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
                                                 <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="showQrCode('{{$certificate->number}}', '{{$certificate->name}}', '{{$certificate->id}}')">
-                                                    <i class="mdi mdi-eye"></i>
+                                                    <i class="mdi mdi-qrcode-scan"></i>
                                                 </button>
                                                 <button class="btn btn-danger actBtn" title="Hapus" onclick="delCertificate({{$certificate->id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
@@ -230,6 +230,10 @@
             }
         });
     }
+
+    $("#modalClose").click(function() {
+        $('#myModal').modal('hide');
+    })
 </script>
 
 @endsection
