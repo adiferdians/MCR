@@ -12,7 +12,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="add-new">
+                        <div class="add-certificate">
                             <a class="nav-link btn btn-success create-new-button" style="width: fit-content;" id="addCertificate" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Certificate</a>
                         </div>
                         <div class="table-responsive">

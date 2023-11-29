@@ -70,10 +70,10 @@
                 title: 'Success...',
                 position: 'top-end',
                 icon: 'success',
-                text: 'Sukses Menambahkan Data!',
+                text: 'Success! Data added successfully.',
                 showConfirmButton: false,
                 width: '400px',
-                timer: 1500
+                timer: 3000
             }).then((response) => {
                 location.reload();
             })
@@ -82,10 +82,10 @@
                 title: 'Error',
                 position: 'top-end',
                 icon: 'error',
-                text: err,
+                text: err.response.data.error.details,
                 showConfirmButton: false,
                 width: '400px',
-                timer: 1500
+                timer: 3000
             })
         })
     })

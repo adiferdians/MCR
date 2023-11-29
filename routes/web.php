@@ -36,5 +36,7 @@ Route::post('certificate/delete/{id}', [CertificateController::class, 'delete'])
 Route::get('client', [ClientController::class, 'index']);
 Route::get('client/create', [ClientController::class, 'create']);
 Route::post('client/send', [ClientController::class, 'send']);
+Route::get('client/detail/{id}', [ClientController::class, 'detailClient']);
 Route::get('client/getUpdate/{id}', [ClientController::class, 'getUpdate']);
 Route::post('client/sendUpdate/{id}', [ClientController::class, 'sendUpdate']);
+Route::post('client/delete/{id}', [ClientController::class, 'deleteClient']);

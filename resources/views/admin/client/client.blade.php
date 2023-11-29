@@ -11,7 +11,7 @@
             <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <div class="add-new">
+                        <div class="add-client">
                             <div>
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
@@ -31,8 +31,6 @@
                                 <thead>
                                     <tr>
                                         <th>ACTION</th>
-                                        <th>ID</th>
-                                        <th>SERVICE</th>
                                         <th>COMPANY</th>
                                         <th>CONTACT</th>
                                         <th>PIC</th>
@@ -48,8 +46,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>ACTION</th>
-                                        <th>ID</th>
-                                        <th>SERVICE</th>
                                         <th>COMPANY</th>
                                         <th>CONTACT</th>
                                         <th>PIC</th>
@@ -67,19 +63,17 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updCertificate({{$certification->client_id}})">
+                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updClient({{$certification->client_id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="getClient({{$certification->client_id}})">
+                                                <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="detailClient({{$certification->client_id}})">
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delCertificate({{$certification->client_id}})">
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$certification->client_id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>{{$certification->client_id}}</td>
-                                        <td>{{$certification->name}}</td>
                                         <td>{{$certification->company_name}}</td>
                                         <td>{{$certification->company_contact}}</td>
                                         <td>{{$certification->pic}}</td>
@@ -118,8 +112,6 @@
                                 <thead>
                                     <tr>
                                         <th>ACTION</th>
-                                        <th>ID</th>
-                                        <th>SERVICE</th>
                                         <th>COMPANY</th>
                                         <th>CONTACT</th>
                                         <th>PIC</th>
@@ -132,8 +124,6 @@
                                 <tfoot>
                                     <tr>
                                         <th>ACTION</th>
-                                        <th>ID</th>
-                                        <th>SERVICE</th>
                                         <th>COMPANY</th>
                                         <th>CONTACT</th>
                                         <th>PIC</th>
@@ -148,19 +138,17 @@
                                     <tr>
                                         <td>
                                             <div>
-                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updCertificate({{$consultation->client_id}})">
+                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updClient({{$consultation->client_id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="getClient({{$consultation->client_id}})">
+                                                <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="detailClient({{$consultation->client_id}})">
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delCertificate({{$consultation->client_id}})">
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$consultation->client_id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>{{$consultation->client_id}}</td>
-                                        <td>{{$consultation->service}}</td>
                                         <td>{{$consultation->company_name}}</td>
                                         <td>{{$consultation->company_contact}}</td>
                                         <td>{{$consultation->pic}}</td>
@@ -215,10 +203,22 @@
             });
     })
 
-    function updCertificate(id) {
+    function detailClient(id) {
+        axios.get('/client/detail/' + id)
+            .then(function(response) {
+                $('.modal-title').html("Detail Client");
+                $('.modal-body').html(response.data);
+                $('#myModal').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+
+    function updClient(id) {
         axios.get('/client/getUpdate/' + id)
             .then(function(response) {
-                $('.modal-title').html("Update Certificate");
+                $('.modal-title').html("Update Data Client");
                 $('.modal-body').html(response.data);
                 $('#myModal').modal('show');
             })
@@ -230,6 +230,48 @@
     $("#modalClose").click(function() {
         $('#myModal').modal('hide');
     })
+
+
+    function delClient(id) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "The deleted data cannot be recovered!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Delete',
+            cancelButtonText: 'Cancle',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post('/client/delete/' + id)
+                    .then(() => {
+                        Swal.fire({
+                            title: 'Success',
+                            position: 'top-end',
+                            icon: 'success',
+                            text: 'Data deleted successfuly!',
+                            showConfirmButton: false,
+                            width: '400px',
+                            timer: 3000
+                        });
+                        setTimeout(() => {
+                            location.reload();
+                        }, 1600);
+                    })
+                    .catch((err) => {
+                        Swal.fire({
+                            title: 'Error',
+                            position: 'top-end',
+                            icon: 'error',
+                            text: err,
+                            showConfirmButton: false,
+                            width: '400px',
+                            timer: 3000
+                        });
+                    });
+            }
+        });
+    }
 </script>
 
 @endsection

@@ -23,7 +23,7 @@ return new class extends Migration
             $table->text('service_detail');
             $table->timestamps();
         });
-        
+
         Schema::create('service_certifications', function (Blueprint $table) {
             $table->bigIncrements('certification_id');
             $table->unsignedBigInteger('surveillance_id');
@@ -33,8 +33,9 @@ return new class extends Migration
             $table->string('status');
             $table->string('notes');
             $table->timestamps();
+
         });
-        
+
         Schema::create('surveillance_certifications', function (Blueprint $table) {
             $table->bigIncrements('surveillance_id');
             $table->date('surveillance_1');
@@ -42,16 +43,9 @@ return new class extends Migration
             $table->string('count');
             $table->string('notification');
             $table->timestamps();
+
         });
-        
-        Schema::create('detil_certifications', function (Blueprint $table) {
-            $table->bigIncrements('detil_id');
-            $table->unsignedBigInteger('id_company');
-            $table->unsignedBigInteger('id_certification');
-            $table->unsignedBigInteger('id_surveillance');
-            $table->timestamps();
-        });
-        
+
         Schema::create('service_consultations', function (Blueprint $table) {
             $table->bigIncrements('consultation_id');
             $table->string('name');
@@ -59,7 +53,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('notes');
             $table->timestamps();
-        });        
+        });
     }
 
     /**

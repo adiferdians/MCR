@@ -1,4 +1,9 @@
-.add-new {
+.add-certificate {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add-client {
     display: flex;
     justify-content: space-between;
 }
@@ -37,7 +42,14 @@
     color: wheat;
 }
 
+.colorWheat {
+    color: white;
+}
+
 .custom-select {
     color: wheat !important;
 }
 
+.modal {
+    top: 10%;
+}

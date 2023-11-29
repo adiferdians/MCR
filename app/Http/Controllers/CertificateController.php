@@ -41,7 +41,10 @@ class CertificateController extends Controller
         if ($validate->fails()) {
             return response()->json([
                 'success' => false,
-                'messages' => $validate->messages()
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
             ], 422);
         }
 
@@ -136,9 +139,13 @@ class CertificateController extends Controller
         if ($validate->fails()) {
             return response()->json([
                 'success' => false,
-                'messages' => $validate->messages()
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
             ], 422);
         }
+
         DB::beginTransaction();
         try {
             $data = [
@@ -174,9 +181,13 @@ class CertificateController extends Controller
         if ($validate->fails()) {
             return response()->json([
                 'success' => false,
-                'messages' => $validate->messages()
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
             ], 422);
         }
+        
         DB::beginTransaction();
         try {
             $data = [
