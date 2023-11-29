@@ -1,6 +1,6 @@
 .add-new {
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: space-between;
 }
 
 .actBtn {
@@ -36,3 +36,8 @@
 .form-control {
     color: wheat;
 }
+
+.custom-select {
+    color: wheat !important;
+}
+

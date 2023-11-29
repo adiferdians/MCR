@@ -6,6 +6,7 @@ use App\Models\client;
 use App\Models\serviceCertification;
 use App\Models\surveillanceCertification;
 use App\Models\detilCertification;
+use App\Models\serviceConsultation;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Validator;
@@ -16,15 +17,35 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $client = Client::join('service_certifications', 'clients.client_id', '=', 'service_certifications.service_id')
-            ->join('surveillance_certifications', 'service_certifications.survelliance_id', '=', 'surveillance_certifications.survelliance_id')
-            ->select('clients.company_name','clients.address','clients.company_contact','clients.pic', 'service_certifications.name',
-            'service_certifications.agency','service_certifications.status','service_certifications.notes', 'surveillance_certifications.surveillance_1',
-            'surveillance_certifications.surveillance_2', 'surveillance_certifications.count','surveillance_certifications.notification',)
-            ->paginate(10);
+        $clientCertification = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+            ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
+            ->select(
+                'clients.client_id',
+                'clients.company_name',
+                'clients.company_contact',
+                'clients.pic',
+                'clients.address',
+                'service_certifications.name',
+                'service_certifications.agency',
+                'service_certifications.status',
+                'service_certifications.notes',
+                'surveillance_certifications.surveillance_1',
+                'surveillance_certifications.surveillance_2',
+                'surveillance_certifications.count',
+                'surveillance_certifications.notification',
+            )
+            ->where('clients.service', '=', 'Certification')
+            ->orderBy('client_id', 'desc')
+            ->paginate($perPage = 10, $columns = ['*'], $pageName = 'Certification');
+
+        $clientConsultation = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
+            ->where('clients.service', '=', 'Consultation')
+            ->orderBy('client_id', 'desc')
+            ->paginate($perPage = 10, $columns = ['*'], $pageName = 'Consultation');
 
         return view('admin.client.client', [
-            'client' => $client,
+            'clientCertification' => $clientCertification,
+            'clientConsultation' => $clientConsultation
         ]);
     }
 
@@ -63,25 +84,37 @@ class ClientController extends Controller
 
         DB::beginTransaction();
         try {
-            $dataSurvelliance = [
-                'surveillance_1' => $request->surveillance_1,
-                'surveillance_2' => $request->surveillance_2,
-                'count' => $request->count,
-                'notification' => $request->notification,
-            ];
-            $surveillance = SurveillanceCertification::create($dataSurvelliance);
-            $surveillanceId = $surveillance->id;
+            if ($request->service == "Certification") {
+                $dataSurvelliance = [
+                    'surveillance_1' => $request->surveillance_1,
+                    'surveillance_2' => $request->surveillance_2,
+                    'count' => $request->count,
+                    'notification' => $request->notification,
+                ];
+                $surveillance = SurveillanceCertification::create($dataSurvelliance);
+                $surveillanceId = $surveillance->id;
 
-            $dataCertification = [
-                'name' => $request->service,
-                'agency' => $request->agency,
-                'start_date' => $request->startDate,
-                'status' => $request->status,
-                'notes' => $request->notes,
-                'survelliance_id' => $surveillanceId
-            ];
-            $certification = ServiceCertification::create($dataCertification);
-            $certificationId = $certification->id;
+                $dataCertification = [
+                    'name' => $request->service,
+                    'agency' => $request->agency,
+                    'start_date' => $request->startDate,
+                    'status' => $request->status,
+                    'notes' => $request->notes,
+                    'surveillance_id' => $surveillanceId
+                ];
+                $certification = ServiceCertification::create($dataCertification);
+                $certificationId = $certification->id;
+            } else if ($request->service == "Consultation") {
+                $dataConsultation = [
+                    'name' => $request->consultationName,
+                    'start_date' => $request->consultationStartDate,
+                    'status' => $request->consultationStatus,
+                    'notes' => $request->consultationNotes,
+                ];
+                $consultation = serviceConsultation::create($dataConsultation);
+                $consultationId = $consultation->id;
+            }
+
 
             $dataClient = [
                 'company_name' => $request->companyName,
@@ -90,26 +123,140 @@ class ClientController extends Controller
                 'company_contact' => $request->contact,
                 'pic_contact' => $request->picContact,
                 'service' => $request->service,
-                'service_detil' => "",
-                'service_id' => $certificationId
-            ];
-            $client = Client::create($dataClient);
-            $clientId = $client->id;
-
-            $dataDetil = [
-                'id_company' => $clientId,
-                'id_certification' => $certificationId,
-                'id_surveillance' => $surveillanceId,
+                'service_detail' => "",
+                'service_id' => ($request->service == "Certification") ? $certificationId : $consultationId
             ];
 
-            detilCertification::insert($dataDetil);
+            if ($request->service == "Certification") {
+                $client = Client::create($dataClient);
+                $clientId = $client->id;
+                $dataDetil = [
+                    'id_company' => $clientId,
+                    'id_certification' => $certificationId,
+                    'id_surveillance' => $surveillanceId,
+                ];
+                detilCertification::insert($dataDetil);
+            } else {
+                Client::create($dataClient);
+            }
+
             DB::commit();
 
-            return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan', 'data' => $dataDetil], 201);
+            return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan'], 201);
         } catch (\Exception $e) {
             DB::rollback();
 
-            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
+            return response()->json(['success' => false, 'messages' => $e->getMessage(), 'line' => $e->getLine()], 400);
+        }
+    }
+
+    function getUpdate($id)
+    {
+        $clientCertification = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+            ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
+            ->where('client_id', $id)
+            ->first();
+
+        $clientConsultation = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
+            ->where('client_id', $id)
+            ->first();
+
+        return view('admin.client.clientUpdate', [
+            'certification' => $clientCertification,
+            'consultation' => $clientConsultation
+        ]);
+    }
+
+    function sendUpdate(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $clientCertification = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+                ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
+                ->where('clients.client_id', '=', $id)
+                ->first();
+
+            $client = Client::where('clients.client_id', '=', $id)->first();
+
+            $clientConsultationId = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
+                ->where('clients.client_id', '=', $id)
+                ->first();
+
+            if ($request->service == "Certification") {
+                $dataSurvelliance = [
+                    'surveillance_1' => $request->surveillance_1,
+                    'surveillance_2' => $request->surveillance_2,
+                    'count' => $request->count,
+                    'notification' => $request->notification,
+                ];
+
+                if (empty($clientCertification->surveillance_id)) {
+                    $surveillance = SurveillanceCertification::create($dataSurvelliance);
+                    $surveillanceId = $surveillance->id;
+
+                    $deleteColsultation = new serviceConsultation();
+                    $deleteColsultation->where('consultation_id', $clientConsultationId->consultation_id)->delete();
+                } else {
+                    SurveillanceCertification::where('surveillance_id', $clientCertification->surveillance_id)->update($dataSurvelliance);
+                }
+
+                $dataCertification = [
+                    'name' => $request->service,
+                    'agency' => $request->agency,
+                    'start_date' => $request->startDate,
+                    'status' => $request->status,
+                    'notes' => $request->notes,
+                    'surveillance_id' => $clientCertification ? $clientCertification->surveillance_id : $surveillanceId
+                ];
+
+                if (empty($clientCertification)) {
+                    $certification = ServiceCertification::create($dataCertification);
+                    $certificationId = $certification->id;
+                } else {
+                    ServiceCertification::where('certification_id', $clientCertification->service_id)->update($dataCertification);
+                }
+            } else if ($request->service == "Consultation") {
+                $dataConsultation = [
+                    'name' => $request->consultationName,
+                    'start_date' => $request->consultationStartDate,
+                    'status' => $request->consultationStatus,
+                    'notes' => $request->consultationNotes,
+                ];
+
+                if ($request->service == "Certification" || $clientConsultationId) {
+                    serviceConsultation::where('consultation_id', $clientConsultationId->consultation_id)->update($dataConsultation);
+                } else {
+                    $consultant = ServiceConsultation::create($dataConsultation);
+                    $consultantId = $consultant->id;
+
+                    $deleteCertificate = new ServiceCertification();
+                    $deleteCertificate->where('certification_id', $clientCertification->certification_id)->delete();
+
+                    $deleteSurvelliance = new SurveillanceCertification();
+                    $deleteSurvelliance->where('surveillance_id', $clientCertification->surveillance_id)->delete();
+                }
+            };
+
+            $dataClient = [
+                'company_name' => $request->companyName,
+                'address' => $request->address,
+                'pic' => $request->pic,
+                'company_contact' => $request->contact,
+                'pic_contact' => $request->picContact,
+                'service' => $request->service,
+                'service_detail' => "",
+                'service_id' =>  $request->service == "Certification" ?
+                    ($clientCertification ? $clientCertification->service_id : $certificationId) : ($clientConsultationId ? $clientConsultationId->consultation_id : $consultantId)
+            ];
+
+            Client::where('client_id', $id)->update($dataClient);
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan'], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage(), 'line' => $e->getLine()], 400);
         }
     }
 }

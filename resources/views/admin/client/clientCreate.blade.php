@@ -25,7 +25,7 @@
         <div class="form-group">
             <label for="service">Service</label>
             <div class="dropdown">
-                <select class="form-control" id="service">
+                <select class="form-control custom-select" id="service">
                     <option disabled selected>Select a Services</option>
                     <option value="Certification">Certification</option>
                     <option value="Consultation">Consultation</option>
@@ -50,7 +50,7 @@
         <div class="form-group">
             <label for="surveillance_2">Status</label>
             <div class="dropdown">
-                <select class="form-control" id="status">
+                <select class="form-control custom-select" id="status">
                     <option disabled selected>Select a Status</option>
                     <option>Active</option>
                     <option>Withdraw</option>
@@ -60,7 +60,7 @@
         </div>
         <div class="form-group">
             <label for="scope">Notes</label>
-            <input type="text" class="form-control" autocomplete="off" id="Notes" placeholder="Notes"></input>
+            <input type="text" class="form-control" autocomplete="off" id="notes" placeholder="Notes"></input>
         </div>
     </div>
     <div class="col-lg-6">
@@ -75,7 +75,7 @@
         <div class="form-group">
             <label for="surveillance_2">Count</label>
             <div class="dropdown">
-                <select class="form-control" id="count">
+                <select class="form-control custom-select" id="count">
                     <option disabled selected>Select a Count</option>
                     <option>Certification</option>
                     <option>Consultation</option>
@@ -96,7 +96,7 @@
         <div class="form-group">
             <label for="surveillance_2">Service Name</label>
             <div class="dropdown">
-                <select class="form-control" id="serviceName">
+                <select class="form-control custom-select" id="consultationName">
                     <option disabled selected>Select a Services</option>
                     <option>Certification</option>
                     <option>Consultation</option>
@@ -105,14 +105,14 @@
         </div>
         <div class="form-group">
             <label for="address">Start Date</label>
-            <input type="date" class="form-control" autocomplete="off" id="startDate"></input>
+            <input type="date" class="form-control" autocomplete="off" id="consultationStartDate"></input>
         </div>
     </div>
     <div class="col-lg-6">
         <div class="form-group">
             <label for="surveillance_2">Status</label>
             <div class="dropdown">
-                <select class="form-control" id="status">
+                <select class="form-control custom-select" id="consultationStatus">
                     <option disabled selected>Select a Status</option>
                     <option>On Progress</option>
                     <option>Pending</option>
@@ -122,8 +122,8 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="scope">Notes</label>
-            <input type="text" class="form-control" autocomplete="off" id="Notes" placeholder="Notes"></input>
+            <label for="notes">Notes</label>
+            <input type="text" class="form-control" autocomplete="off" id="consultationNotes" placeholder="Notes"></input>
         </div>
     </div>
 </div>
@@ -188,12 +188,17 @@
         const agency = $('#certificationAgency').val();
         const startDate = $('#startDate').val();
         const status = $('#status').val();
-        const notes = $('#Notes').val();
+        const notes = $('#notes').val();
 
         const surveillance_1 = $('#surveillance_1').val();
         const surveillance_2 = $('#surveillance_2').val();
         const count = $('#count').val();
         const notification = $('#notification').val();
+
+        const consultationName = $('#consultationName').val();
+        const consultationStartDate = $('#consultationStartDate').val();
+        const consultationStatus = $('#consultationStatus').val();
+        const consultationNotes = $('#consultationNotes').val();
 
         axios.post('/client/send', {
             companyName,
@@ -210,7 +215,11 @@
             surveillance_1,
             surveillance_2,
             count,
-            notification
+            notification, 
+            consultationNotes, 
+            consultationStatus, 
+            consultationStartDate,
+            consultationName
         }).then((response) => {
             Swal.fire({
                 title: 'Success...',
