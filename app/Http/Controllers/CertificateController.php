@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\certificate;
+use App\Models\Certificate;
 use Validator;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class CertificateController extends Controller
 {
     public function index(){
-        $certificate = certificate::orderByDesc('id')->paginate(10);
+        $certificate = Certificate::orderByDesc('id')->paginate(10);
 
         return view('admin.certificate.certificate', [
             'data' => $certificate
@@ -48,7 +48,7 @@ class CertificateController extends Controller
             ], 422);
         }
 
-        $countCertivicate = certificate::count();
+        $countCertivicate = Certificate::count();
 
         $increment = $countCertivicate;
         $alphabet = range('A', 'Z');
@@ -103,7 +103,7 @@ class CertificateController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ];
 
-            $request->id ? certificate::where('id', $request->id)->update($data) : certificate::insert($data);
+            $request->id ? Certificate::where('id', $request->id)->update($data) : Certificate::insert($data);
             DB::commit();
 
             return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan', 'data' => $data], 201);
@@ -116,7 +116,7 @@ class CertificateController extends Controller
 
     public function getUpdate($id)
     {
-        $certificate = certificate::where('id', $id)->get();
+        $certificate = Certificate::where('id', $id)->get();
         return view('admin.certificate.certificateUpdate', [
             'certificate' => $certificate
         ]);
@@ -161,7 +161,7 @@ class CertificateController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ];
 
-            certificate::where('id', $id)->update($data);
+            Certificate::where('id', $id)->update($data);
             DB::commit();
 
             return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan', 'data' => $data], 201);
@@ -195,7 +195,7 @@ class CertificateController extends Controller
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ];
 
-            certificate::where('id', $id)->update($data);
+            Certificate::where('id', $id)->update($data);
             DB::commit();
 
             return response()->json(['success' => true, 'message' => 'Status berhasil diubah', 'data' => $data], 201);
@@ -220,7 +220,7 @@ class CertificateController extends Controller
 
     public function delete($id)
     {
-        $data = new certificate();
+        $data = new Certificate();
         $data->where('id', $id)->delete();
     }
 }

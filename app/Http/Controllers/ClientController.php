@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\client;
+use App\Models\Client;
 use App\Models\serviceCertification;
 use App\Models\surveillanceCertification;
 use App\Models\serviceConsultation;
@@ -262,7 +262,7 @@ class ClientController extends Controller
                 ];
 
                 if ($request->service == "Certification" || $clientConsultationId) {
-                    serviceConsultation::where('consultation_id', $clientConsultationId->consultation_id)->update($dataConsultation);
+                    ServiceConsultation::where('consultation_id', $clientConsultationId->consultation_id)->update($dataConsultation);
                 } else {
                     $consultant = ServiceConsultation::create($dataConsultation);
                     $consultantId = $consultant->id;
@@ -313,7 +313,7 @@ class ClientController extends Controller
             $client = new client();
             $client->where('client_id', $id)->delete();
 
-            $certification = new serviceCertification();
+            $certification = new ServiceCertification();
             $certification->where('certification_id', $clientCertification->certification_id)->delete();
 
             $surveilance = new surveillanceCertification();
