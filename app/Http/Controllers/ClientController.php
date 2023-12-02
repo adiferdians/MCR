@@ -24,6 +24,7 @@ class ClientController extends Controller
                 'clients.company_contact',
                 'clients.pic',
                 'clients.address',
+                'service_certifications.certification_id',
                 'service_certifications.name',
                 'service_certifications.agency',
                 'service_certifications.status',
@@ -31,7 +32,6 @@ class ClientController extends Controller
                 'surveillance_certifications.surveillance_1',
                 'surveillance_certifications.surveillance_2',
                 'surveillance_certifications.count',
-                'surveillance_certifications.notification',
             )
             ->where('clients.service', '=', 'Certification')
             ->orderBy('client_id', 'desc')
@@ -69,7 +69,6 @@ class ClientController extends Controller
             'surveillance_1' => $request->service == "Certification" ? "required" : "",
             'surveillance_2' => $request->service == "Certification" ? "required" : "",
             'count' => $request->service == "Certification" ? "required" : "",
-            'notification' => $request->service == "Certification" ? "required" : "",
             'consultationName' => $request->service == "Consultation" ? "required" : "",
             'consultationNotes' => $request->service == "Consultation" ? "required" : "",
             'consultationStartDate' => $request->service == "Consultation" ? "required" : "",
@@ -93,7 +92,6 @@ class ClientController extends Controller
                     'surveillance_1' => $request->surveillance_1,
                     'surveillance_2' => $request->surveillance_2,
                     'count' => $request->count,
-                    'notification' => $request->notification,
                 ];
                 $surveillance = SurveillanceCertification::create($dataSurvelliance);
                 $surveillanceId = $surveillance->id;
@@ -142,20 +140,21 @@ class ClientController extends Controller
         }
     }
 
-    function detailClient($id){
+    function detailClient($id)
+    {
         $clientCertification = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
-        ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
-        ->where('client_id', $id)
-        ->first();
+            ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
+            ->where('client_id', $id)
+            ->first();
 
-    $clientConsultation = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
-        ->where('client_id', $id)
-        ->first();
+        $clientConsultation = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
+            ->where('client_id', $id)
+            ->first();
 
-    return view('admin.client.clientView', [
-        'certification' => $clientCertification,
-        'consultation' => $clientConsultation
-    ]);
+        return view('admin.client.clientView', [
+            'certification' => $clientCertification,
+            'consultation' => $clientConsultation
+        ]);
     }
 
     function getUpdate($id)
@@ -191,7 +190,6 @@ class ClientController extends Controller
             'surveillance_1' => $request->service == "Certification" ? "required" : "",
             'surveillance_2' => $request->service == "Certification" ? "required" : "",
             'count' => $request->service == "Certification" ? "required" : "",
-            'notification' => $request->service == "Certification" ? "required" : "",
             'consultationName' => $request->service == "Consultation" ? "required" : "",
             'consultationNotes' => $request->service == "Consultation" ? "required" : "",
             'consultationStartDate' => $request->service == "Consultation" ? "required" : "",
@@ -225,7 +223,6 @@ class ClientController extends Controller
                     'surveillance_1' => $request->surveillance_1,
                     'surveillance_2' => $request->surveillance_2,
                     'count' => $request->count,
-                    'notification' => $request->notification,
                 ];
 
                 if (empty($clientCertification->surveillance_id)) {
@@ -295,6 +292,74 @@ class ClientController extends Controller
             DB::rollback();
 
             return response()->json(['success' => false, 'messages' => $e->getMessage(), 'line' => $e->getLine()], 400);
+        }
+    }
+
+    public function changeStatus(Request $request, $id)
+    {
+        $validate = Validator::make($request->all(), [
+            'status'   => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
+            ], 422);
+        }
+        
+        DB::beginTransaction();
+        try {
+            $data = [
+                'status' => $request->status,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ];
+
+            serviceCertification::where('certification_id', $id)->update($data);
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Status berhasil diubah', 'data' => $data], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
+        }
+    }
+
+    public function changeConsultantStatus(Request $request, $id)
+    {
+        $validate = Validator::make($request->all(), [
+            'status'   => 'required'
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
+            ], 422);
+        }
+        
+        DB::beginTransaction();
+        try {
+            $data = [
+                'status' => $request->status,
+                'updated_at' => Carbon::now()->toDateTimeString(),
+            ];
+
+            serviceConsultation::where('consultation_id', $id)->update($data);
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Status berhasil diubah', 'data' => $data], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
         }
     }
 

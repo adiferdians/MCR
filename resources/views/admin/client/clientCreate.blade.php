@@ -76,15 +76,11 @@
             <label for="surveillance_2">Count</label>
             <div class="dropdown">
                 <select class="form-control custom-select" id="count">
-                    <option disabled selected>Select a Count</option>
-                    <option>Certification</option>
-                    <option>Consultation</option>
+                    <option disabled selected>Select Surveillance Count</option>
+                    <option value="1">Surveillance 1</option>
+                    <option value="2">Surveillance 2</option>
                 </select>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="scope">Notification</label>
-            <input type="text" class="form-control" autocomplete="off" id="notification" rows="4" placeholder="Notification"></input>
         </div>
     </div>
 </div>
@@ -169,7 +165,6 @@
             $("#surveillance_1").val('');
             $("#surveillance_2").val('');
             $("#count").val('');
-            $("#notification").val('');
 
             $('#consultationForm').hide();
             $('#certificationForm').hide();

@@ -13,7 +13,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-certificate">
-                            <a class="nav-link btn btn-success create-new-button" style="width: fit-content;" id="addCertificate" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Certificate</a>
+                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addCertificate" data-toggle="dropdown" aria-expanded="false" href="#">+ Create New Certificate</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover" style="text-align: center;">
@@ -22,11 +22,9 @@
                                         <th>ACTION</th>
                                         <th>ORGANIZATION</th>
                                         <th>TITLE</th>
-                                        <th>TYPE</th>
                                         <th>CERTIFICATE NUMBER</th>
                                         <th>SURVEILLANCE 1</th>
                                         <th>SURVEILLANCE 2</th>
-                                        <th>DATE</th>
                                         <th>STATUS</th>
                                     </tr>
                                 </thead>
@@ -35,11 +33,9 @@
                                         <th>ACTION</th>
                                         <th>ORGANIZATION</th>
                                         <th>TITLE</th>
-                                        <th>TYPE</th>
                                         <th>CERTIFICATE NUMBER</th>
                                         <th>SURVEILLANCE 1</th>
                                         <th>SURVEILLANCE 2</th>
-                                        <th>DATE</th>
                                         <th>STATUS</th>
                                     </tr>
                                 </tfoot>
@@ -61,14 +57,12 @@
                                         </td>
                                         <td>{{$certificate->name}}</td>
                                         <td>{{$certificate->title}}</td>
-                                        <td>{{$certificate->type}}</td>
                                         <td>{{$certificate->number}}</td>
                                         <td>{{$certificate->surveillance_1}}</td>
                                         <td>{{$certificate->surveillance_2}}</td>
-                                        <td>{{$certificate->date}}</td>
                                         <td>
                                             <div class="dropdown">
-                                                <button class="btn {{ $certificate->status == 'active' ? 'btn-success' : ($certificate->status == 'withdraw' ? 'btn-info' : 'btn-warning') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn {{ $certificate->status == 'active' ? 'btn-success' : ($certificate->status == 'withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$certificate->status}}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
@@ -139,6 +133,10 @@
             }
         })
     };
+
+    $("#modalCloseSM").click(function() {
+        $('#modalSmall').modal('hide');
+    })
 
     function showQrCode(number, name, id) {
         let newNumber = number.replace(new RegExp("/", "g"), "");

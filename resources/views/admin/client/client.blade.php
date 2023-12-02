@@ -15,15 +15,15 @@
                             <div>
                                 <ul class="nav nav-pills">
                                     <li class="nav-item">
-                                        <a class="nav-link cursor active" id="certificationTab">Certifications</a>
+                                        <a class="nav-link active btn-client" style="cursor: pointer;" id="certificationTab">Certifications</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="consultationTab">Consultation</a>
+                                        <a class="nav-link btn-client" id="consultationTab">Consultation</a>
                                     </li>
                                 </ul>
                             </div>
                             <div>
-                                <a class="nav-link btn btn-success create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false">+ Create New Client Data</a>
+                                <a class="nav-link btn create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false">+ Create New Client Data</a>
                             </div>
                         </div>
                         <div class="table-responsive" id="certifications">
@@ -32,7 +32,6 @@
                                     <tr>
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
-                                        <th>CONTACT</th>
                                         <th>PIC</th>
                                         <th>AGENCY</th>
                                         <th>NOTES</th>
@@ -47,7 +46,6 @@
                                     <tr>
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
-                                        <th>CONTACT</th>
                                         <th>PIC</th>
                                         <th>AGENCY</th>
                                         <th>NOTES</th>
@@ -61,7 +59,7 @@
                                 @foreach($clientCertification as $certification)
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td style="width: 100px;">
                                             <div>
                                                 <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updClient({{$certification->client_id}})">
                                                     <i class="mdi mdi-pencil"></i>
@@ -75,25 +73,44 @@
                                             </div>
                                         </td>
                                         <td>{{$certification->company_name}}</td>
-                                        <td>{{$certification->company_contact}}</td>
                                         <td>{{$certification->pic}}</td>
                                         <td>{{$certification->agency}}</td>
                                         <td>{{$certification->notes}}</td>
                                         <td>{{$certification->surveillance_1}}</td>
                                         <td>{{$certification->surveillance_2}}</td>
-                                        <td>{{$certification->count}}</td>
-                                        <td>{{$certification->notification}}</td>
+                                        <td>{{$certification->count == "1" ? "Srv 1" : "Srv 2" }}</td>
+                                        <td>
+                                            @php
+                                            if($certification->count == 1) {
+                                            $tanggalTarget = $certification->surveillance_1;
+                                            } else {
+                                            $tanggalTarget = $certification->surveillance_2;
+                                            }
+
+                                            $tanggalTarget_timestamp = strtotime($tanggalTarget);
+                                            $waktuSekarang_timestamp = time();
+                                            $selisih = $tanggalTarget_timestamp - $waktuSekarang_timestamp;
+
+                                            if ($selisih > 0) {
+                                            $hari = floor($selisih / (60 * 60 * 24));
+
+                                            echo "$hari Days";
+                                            } else {
+                                            echo "Passed";
+                                            }
+                                            @endphp
+                                        </td>
                                         <td>
                                             <div class="dropdown">
-                                                <button class="btn {{ $certification->status == 'active' ? 'btn-success' : ($certification->status == 'withdraw' ? 'btn-info' : 'btn-warning') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn {{ $certification->status == 'Active' ? 'btn-success' : ($certification->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$certification->status}}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
-                                                    <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('active', '{{$certification->client_id}}')">Active</button>
+                                                    <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('Active', '{{$certification->certification_id}}')">Active</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('withdraw', '{{$certification->client_id}}')">Withdraw</button>
+                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('Withdraw', '{{$certification->certification_id}}')">Withdraw</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('suspended', '{{$certification->client_id}}')">suspended</button>
+                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Suspended', '{{$certification->certification_id}}')">Suspended</button>
                                                 </div>
                                             </div>
                                         </td>
@@ -136,7 +153,7 @@
                                 @foreach($clientConsultation as $consultation)
                                 <tbody>
                                     <tr>
-                                        <td>
+                                        <td style="width: 100px;">
                                             <div>
                                                 <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updClient({{$consultation->client_id}})">
                                                     <i class="mdi mdi-pencil"></i>
@@ -154,7 +171,24 @@
                                         <td>{{$consultation->pic}}</td>
                                         <td>{{$consultation->service}}</td>
                                         <td>{{$consultation->start_date}}</td>
-                                        <td>{{$consultation->status}}</td>
+                                        <td>
+                                            <div class="dropdown">
+                                                <button class="btn {{ $consultation->status == 'Done' ? 'btn-success' : 
+                                                    ($consultation->status == 'Pending' ? 'btn-warning' : ($consultation->status == 'On Progress' ? 'btn-primary' : 'btn-danger')) }} 
+                                                    dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    {{$consultation->status}}
+                                                </button>
+                                                <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
+                                                    <button class="dropdown-item" type="button" data-value="Done" onclick="changeConsultantStatus('Done', '{{$consultation->consultation_id}}')">Done</button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item" type="button" data-value="On Progress" onclick="changeConsultantStatus('On Progress', '{{$consultation->consultation_id}}')">On Progress</button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item" type="button" data-value="Pending" onclick="changeConsultantStatus('Pending', '{{$consultation->consultation_id}}')">Pending</button>
+                                                    <div class="dropdown-divider"></div>
+                                                    <button class="dropdown-item" type="button" data-value="Overdue" onclick="changeConsultantStatus('Overdue', '{{$consultation->consultation_id}}')">Overdue</button>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td>{{$consultation->notes}}</td>
                                     </tr>
                                 </tbody>
@@ -214,6 +248,88 @@
                 console.log(error);
             });
     }
+
+    function changeStatus(status, id) {
+        Swal.fire({
+            title: 'Are you sure you want to change the Client status?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Change'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    axios.post('/client/changeStatus/' + id, {
+                            status,
+                        }).then(() => {
+                            Swal.fire({
+                                title: 'Success',
+                                position: 'top-end',
+                                icon: 'success',
+                                text: 'Status Changed!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1600);
+                        })
+                        .catch((err) => {
+                            Swal.fire({
+                                title: 'Error',
+                                position: 'top-end',
+                                icon: 'error',
+                                text: err,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            }
+        })
+    };
+
+    function changeConsultantStatus(status, id) {
+        Swal.fire({
+            title: 'Are you sure you want to change the Client status?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Change'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                if (result.isConfirmed) {
+                    axios.post('/client/changeConsultantStatus/' + id, {
+                            status,
+                        }).then(() => {
+                            Swal.fire({
+                                title: 'Success',
+                                position: 'top-end',
+                                icon: 'success',
+                                text: 'Status Changed!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            setTimeout(() => {
+                                location.reload();
+                            }, 1600);
+                        })
+                        .catch((err) => {
+                            Swal.fire({
+                                title: 'Error',
+                                position: 'top-end',
+                                icon: 'error',
+                                text: err,
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        });
+                }
+            }
+        })
+    };
 
     function updClient(id) {
         axios.get('/client/getUpdate/' + id)

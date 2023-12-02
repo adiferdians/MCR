@@ -88,3 +88,14 @@
     background-color: #95743e;
     border: #95743e;
 }
+
+.btn-client{
+    cursor: pointer;
+    background-color: #343b4b;
+    color: white;
+}
+
+.btn-client:hover{
+    background-color: #2b2f3c;
+    color: white;
+}

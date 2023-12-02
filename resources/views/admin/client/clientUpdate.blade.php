@@ -75,14 +75,10 @@
             <label for="surveillance_2">Count</label>
             <div class="dropdown">
                 <select class="form-control custom-select" id="count">
-                    <option {{ $certification ? ($certification->count === "Certification" ? "selected" : "") : ''}}>Certification</option>
-                    <option {{ $certification ? ($certification->count === "Consultation" ? "selected" : "") : ''}}>Consultation</option>
+                    <option {{ $certification ? ($certification->count === "1" ? "selected" : "") : ''}} value="1">Surveillance 1</option>
+                    <option {{ $certification ? ($certification->count === "2" ? "selected" : "") : ''}} value="2">Surveillance 2</option>
                 </select>
             </div>
-        </div>
-        <div class="form-group">
-            <label for="scope">Notification</label>
-            <input type="text" class="form-control" autocomplete="off" id="notification" value="{{ $certification ? $certification->notification : ''}}" placeholder="Notification"></input>
         </div>
     </div>
 </div>
@@ -177,7 +173,6 @@
         const surveillance_1 = $('#surveillance_1').val();
         const surveillance_2 = $('#surveillance_2').val();
         const count = $('#count').val();
-        const notification = $('#notification').val();
 
         const consultationName = $('#consultationServiceName').val();
         const consultationNotes = $('#consultationNotes').val();
@@ -199,7 +194,6 @@
             surveillance_1,
             surveillance_2,
             count,
-            notification,
             consultationName,
             consultationNotes,
             consultationStartDate,

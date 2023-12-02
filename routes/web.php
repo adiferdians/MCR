@@ -42,6 +42,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('client/detail/{id}', [ClientController::class, 'detailClient']);
     Route::get('client/getUpdate/{id}', [ClientController::class, 'getUpdate']);
     Route::post('client/sendUpdate/{id}', [ClientController::class, 'sendUpdate']);
+    Route::post('client/changeStatus/{id}', [ClientController::class, 'changeStatus']);
+    Route::post('client/changeConsultantStatus/{id}', [ClientController::class, 'changeConsultantStatus']);
     Route::post('client/delete/{id}', [ClientController::class, 'deleteClient']);
 });
 
