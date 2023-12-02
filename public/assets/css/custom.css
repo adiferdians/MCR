@@ -20,6 +20,7 @@
     display: block;
     width: -webkit-fill-available;
     overflow-x: hidden;
+    color: wheat;
 }
 
 .page-link {
@@ -52,4 +53,33 @@
 
 .modal {
     top: 10%;
+}
+
+.user-logo{
+    position: absolute;
+    left: 30px;
+    top: 15px;
+}
+
+.logo{
+    height: 50px;
+    width: auto;
+}
+
+.verif-container{
+    display: flex;
+}
+
+.card-verif {
+    width: 100%; 
+    min-width: 300px;
+}
+
+.table-detail {
+    width: 100%;
+}
+
+.create-new-button {
+    background-color: #dbaf66;
+    border: #dbaf66;
 }

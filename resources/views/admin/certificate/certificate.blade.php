@@ -119,7 +119,6 @@
                                 icon: 'success',
                                 text: 'Status Changed!',
                                 showConfirmButton: false,
-                                width: '400px',
                                 timer: 1500
                             });
                             setTimeout(() => {
@@ -133,7 +132,6 @@
                                 icon: 'error',
                                 text: err,
                                 showConfirmButton: false,
-                                width: '400px',
                                 timer: 1500
                             });
                         });
@@ -209,7 +207,6 @@
                             icon: 'success',
                             text: 'Data deleted successfuly!',
                             showConfirmButton: false,
-                            width: '400px',
                             timer: 1500
                         });
                         setTimeout(() => {
@@ -223,7 +220,6 @@
                             icon: 'error',
                             text: err,
                             showConfirmButton: false,
-                            width: '400px',
                             timer: 1500
                         });
                     });

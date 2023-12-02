@@ -1,7 +1,7 @@
 @extends('admin.layout.master')
 @section('content')
-@section('User', 'active')
-@section('title', 'User')
+@section('Client', 'active')
+@section('title', 'Client')
 <div class="main-panel">
     <div class="content-wrapper">
         <div class="page-header">
@@ -23,7 +23,7 @@
                                 </ul>
                             </div>
                             <div>
-                                <a class="nav-link btn btn-success create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false">+ Create New Client</a>
+                                <a class="nav-link btn btn-success create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false">+ Create New Client Data</a>
                             </div>
                         </div>
                         <div class="table-responsive" id="certifications">

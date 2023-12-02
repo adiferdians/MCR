@@ -5,7 +5,10 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>MCR</title>
+
+  <title>MCR @yield('title')</title>
+  <link rel="icon" type="image/png" href="assets\images\logo\title-logo.png">
+
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
@@ -39,9 +42,8 @@
   <div class="container-scroller">
     <!-- partial:partials/_sidebar.html -->
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
-      <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top">
-        <a class="sidebar-brand brand-logo" href="index.html"><img src="assets/images/logo.svg" alt="logo" /></a>
-        <a class="sidebar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
+      <div class="user-logo">
+        <img class="logo" src="assets\images\logo\logo.png" alt="logo">
       </div>
       <ul class="nav">
         <li class="nav-item nav-category">
@@ -63,7 +65,7 @@
             <span class="menu-title">Certificate</span>
           </a>
         </li>
-        <li class="nav-item menu-items">
+        <li class="nav-item menu-items @yield('Client')">
           <a class="nav-link" href="/client">
             <span class="menu-icon">
               <i class="mdi mdi-contacts"></i>
@@ -77,9 +79,6 @@
     <div class="container-fluid page-body-wrapper">
       <!-- partial:partials/_navbar.html -->
       <nav class="navbar p-0 fixed-top d-flex flex-row">
-        <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-          <a class="navbar-brand brand-logo-mini" href="index.html"><img src="assets/images/logo-mini.svg" alt="logo" /></a>
-        </div>
         <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item dropdown">
@@ -168,8 +167,7 @@
 
       } else if (
         result.dismiss === Swal.DismissReason.cancel
-      ) {
-      }
+      ) {}
     })
   })
 </script>

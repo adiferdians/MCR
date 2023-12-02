@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CertificateController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\VerificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('client/sendUpdate/{id}', [ClientController::class, 'sendUpdate']);
     Route::post('client/delete/{id}', [ClientController::class, 'deleteClient']);
 });
+
+
+Route::get('/', [VerificationController::class, 'verificationIndex'])->name('verification');
+Route::get('/{number}', [verificationController::class, 'detilCertificate']);
+Route::post('/', [verificationController::class, 'find']);
