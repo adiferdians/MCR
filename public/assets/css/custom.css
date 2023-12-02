@@ -55,23 +55,23 @@
     top: 10%;
 }
 
-.user-logo{
+.user-logo {
     position: absolute;
     left: 30px;
     top: 15px;
 }
 
-.logo{
+.logo {
     height: 50px;
     width: auto;
 }
 
-.verif-container{
+.verif-container {
     display: flex;
 }
 
 .card-verif {
-    width: 100%; 
+    width: 100%;
     min-width: 300px;
 }
 
@@ -82,4 +82,9 @@
 .create-new-button {
     background-color: #dbaf66;
     border: #dbaf66;
+}
+
+.create-new-button:hover {
+    background-color: #95743e;
+    border: #95743e;
 }
