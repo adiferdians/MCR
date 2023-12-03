@@ -51,10 +51,6 @@
     color: wheat !important;
 }
 
-.modal {
-    top: 10%;
-}
-
 .user-logo {
     position: absolute;
     left: 30px;
@@ -97,5 +93,9 @@
 
 .btn-client:hover{
     background-color: #2b2f3c;
-    color: white;
+    color: wheat;
+}
+
+.dropdown-item:hover{
+    color: wheat;
 }
