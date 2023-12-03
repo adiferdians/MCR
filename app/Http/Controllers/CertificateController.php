@@ -211,7 +211,7 @@ class CertificateController extends Controller
         $qrCode = QrCode::format('svg')
             ->size(1000)
             ->errorCorrection('H')
-            ->generate(url("/verifikasi/" . $number));
+            ->generate(url($number));
 
         return response()->json([
             'DATA' => base64_encode($qrCode)
