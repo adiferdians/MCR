@@ -125,7 +125,6 @@ class ClientController extends Controller
                 'company_contact' => $request->contact,
                 'pic_contact' => $request->picContact,
                 'service' => $request->service,
-                'service_detail' => "",
                 'service_id' => ($request->service == "Certification") ? $certificationId : $consultationId
             ];
 
@@ -279,7 +278,6 @@ class ClientController extends Controller
                 'company_contact' => $request->contact,
                 'pic_contact' => $request->picContact,
                 'service' => $request->service,
-                'service_detail' => "",
                 'service_id' =>  $request->service == "Certification" ?
                     ($clientCertification ? $clientCertification->service_id : $certificationId) : ($clientConsultationId ? $clientConsultationId->consultation_id : $consultantId)
             ];

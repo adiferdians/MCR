@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('pic');
             $table->string('pic_contact');
             $table->string('service');
-            $table->text('service_detail');
             $table->timestamps();
         });
 
@@ -41,7 +40,6 @@ return new class extends Migration
             $table->date('surveillance_1');
             $table->date('surveillance_2');
             $table->string('count');
-            $table->string('notification');
             $table->timestamps();
 
         });
