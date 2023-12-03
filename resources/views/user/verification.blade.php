@@ -44,7 +44,7 @@
         <div class="main-panel">
             <div class="content-wrapper">
                 <div class="verif-container">
-                    <div class="col-xl-4 col-md-6 mb-4">
+                    <div class="col-xl-4">
                         <div class="container-fluid">
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">Input ID Certificate</h1>
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-xl-8 col-md-6 mb-4" id="dataPeserta">
+                    <div class="col-xl-8" id="dataPeserta">
                         <div class="container-fluid">
                             <div class="d-sm-flex align-items-center justify-content-between mb-4">
                                 <h1 class="h3 mb-0 text-gray-800">Certificate Information</h1>
