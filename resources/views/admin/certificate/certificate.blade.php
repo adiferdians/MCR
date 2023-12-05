@@ -151,7 +151,7 @@
                     <img width='300' height='auto' src='data:image/svg+xml;base64,${data.DATA}' />
                 </div><br>
                     <div>
-                        <a href='data:image/svg+xml;base64,${data.DATA}' class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" download=${name}>
+                        <a href='data:image/svg+xml;base64,${data.DATA}' class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm" download=${name}.png>
                         <i class="fas fa-download"></i>  Download QR Code</a>
                     </div>
                 </div>`);

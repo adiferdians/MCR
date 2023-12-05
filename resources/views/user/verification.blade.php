@@ -80,7 +80,7 @@
                                     <table class="table table-responsive" id="dataTable" cellspacing="0">
                                         <tbody>
                                             <tr>
-                                                <td>Title</td>
+                                                <td>Standard</td>
                                                 <td>:</td>
                                                 @if(isset($certificate))
                                                 <td class="table-detail" class="table-detail">{{$certificate[0]['title']}}</td>
@@ -98,7 +98,7 @@
                                                 @endif
                                             </tr>
                                             <tr>
-                                                <td>Location</td>
+                                                <td>Address</td>
                                                 <td>:</td>
                                                 @if(isset($certificate))
                                                 <td class="table-detail">{{$certificate[0]['address']}}</td>
@@ -188,7 +188,7 @@
                     var tableBody = $('#dataTable tbody');
                     tableBody.empty();
                     var row = '<tr>' +
-                        '<td>' + "Title" + '</td>' +
+                        '<td>' + "Standard" + '</td>' +
                         '<td>' + ":" + '</td>' +
                         '<td  class="table-detail">' + data.title + '</td>' +
                         '</tr>' + '<tr>' +
@@ -196,7 +196,7 @@
                         '<td>' + ":" + '</td>' +
                         '<td  class="table-detail">' + data.name + '</td>' +
                         '</tr>' + '<tr>' +
-                        '<td>' + "Location" + '</td>' +
+                        '<td>' + "Address" + '</td>' +
                         '<td>' + ":" + '</td>' +
                         '<td  class="table-detail">' + data.address + '</td>' +
                         '</tr>' + '<tr>' +
@@ -234,11 +234,15 @@
                     var tableBody = $('#dataTable tbody');
                     tableBody.empty();
                     var row = '<tr>' +
+                        '<td>' + "Standard" + '</td>' +
+                        '<td>' + ":" + '</td>' +
+                        '<td  class="table-detail">' + '</td>' +
+                        '</tr>' + '<tr>' +
                         '<td>' + "Organization" + '</td>' +
                         '<td>' + ":" + '</td>' +
                         '<td  class="table-detail">' + '</td>' +
                         '</tr>' + '<tr>' +
-                        '<td>' + "Location" + '</td>' +
+                        '<td>' + "Address" + '</td>' +
                         '<td>' + ":" + '</td>' +
                         '<td  class="table-detail">' + '</td>' +
                         '</tr>' + '<tr>' +

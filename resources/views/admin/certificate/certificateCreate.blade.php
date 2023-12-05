@@ -23,8 +23,8 @@
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            <label for="effective">Effective</label>
-            <input type="date" class="form-control" id="effective">
+            <label for="date">Date</label>
+            <input type="date" class="form-control" id="date">
         </div>
         <div class="form-group">
             <label for="surveillance_1">Surveillance 1</label>
@@ -35,8 +35,8 @@
             <input type="date" class="form-control" id="surveillance_2">
         </div>
         <div class="form-group">
-            <label for="date">date</label>
-            <input type="date" class="form-control" id="date">
+            <label for="effective">Effective</label>
+            <input type="date" class="form-control" id="effective">
         </div>
         <button type="submit" class="btn btn-primary mr-2" id="send">Submit</button>
         <button class="btn btn-dark">Cancel</button>

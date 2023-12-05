@@ -109,4 +109,8 @@
     .verif-container {
         display: block;
     }
+
+    .table-responsive{
+        overflow-x: auto;
+    }
 }

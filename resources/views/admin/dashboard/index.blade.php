@@ -11,19 +11,19 @@
             <div class="col-sm-4 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Certificate</h5>
+                        <h2>Certificate</h2>
                         <div class="row">
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h2 class="mb-0">Active</h2>
+                                    <h5 class="mb-0">Active</h5>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">{{$countCertificateActive}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h2 class="mb-0">Withdrawed</h2>
+                                    <h5 class="mb-0">Withdrawed</h5>
                                     <p class="text-warning ml-2 mb-0 font-weight-medium">{{$countCertificateWithdraw}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h2 class="mb-0">Suspended</h2>
+                                    <h5 class="mb-0">Suspended</h5>
                                     <p class="text-danger ml-2 mb-0 font-weight-medium">{{$countCertificateSuspended}} Pcs</p>
                                 </div>
                             </div>
@@ -37,19 +37,19 @@
             <div class="col-sm-4 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Client Certification</h5>
+                        <h2>Client Certification</h2>
                         <div class="row">
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h2 class="mb-0">Active</h2>
+                                    <h5 class="mb-0">Active</h5>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">{{$countCertificationActive}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h2 class="mb-0">Withdrawed</h2>
+                                    <h5 class="mb-0">Withdrawed</h5>
                                     <p class="text-warning ml-2 mb-0 font-weight-medium">{{$countCertificationWithdraw}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h2 class="mb-0">Suspended</h2>
+                                    <h5 class="mb-0">Suspended</h5>
                                     <p class="text-danger ml-2 mb-0 font-weight-medium">{{$countCertificationSuspended}} Pcs</p>
                                 </div>
                             </div>
@@ -63,23 +63,23 @@
             <div class="col-sm-4 grid-margin">
                 <div class="card">
                     <div class="card-body">
-                        <h5>Client Consultation</h5>
+                        <h2>Client Consultation</h2>
                         <div class="row">
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
                             <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h3 class="mb-0">Done</h3>
+                                    <h5 class="mb-0">Done</h5>
                                     <p class="text-success ml-2 mb-0 font-weight-medium">{{$countConsultationDone}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h3 class="mb-0">On Progress</h3>
+                                    <h5 class="mb-0">On Progress</h5>
                                     <p class="text-primary ml-2 mb-0 font-weight-medium">{{$countConsultationOnProgress}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h3 class="mb-0">Pending</h3>
+                                    <h5 class="mb-0">Pending</h5>
                                     <p class="text-warning ml-2 mb-0 font-weight-medium">{{$countConsultationPending}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
-                                    <h3 class="mb-0">Overdue</h3>
+                                    <h5 class="mb-0">Overdue</h5>
                                     <p class="text-danger ml-2 mb-0 font-weight-medium">{{$countConsultationOverdue}} Pcs</p>
                                 </div>
                             </div>
