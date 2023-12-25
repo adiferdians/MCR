@@ -73,6 +73,24 @@
             <span class="menu-title">Client</span>
           </a>
         </li>
+        <li class="nav-item menu-items @yield('Master')">
+          <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+            <span class="menu-icon">
+              <i class="mdi mdi-laptop"></i>
+            </span>
+            <span class="menu-title">Master Data</span>
+            <i class="menu-arrow"></i>
+          </a>
+          <div class="collapse @yield('Collapse')" id="ui-basic">
+            <ul class="nav flex-column sub-menu">
+              <li class="nav-item"> <a class="nav-link @yield('Broker')" href="/broker">Boker</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('certBody')" href="/certification-body">Certification Body</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('role')" href="/role">Role</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('Standard')" href="/standard">Standard</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('User')" href="/user">User</a></li>
+            </ul>
+          </div>
+        </li>
       </ul>
     </nav>
     <!-- partial -->
@@ -110,7 +128,7 @@
         </div>
       </nav>
 
-      <!-- modal start -->
+      <!-- modal Large -->
       <div class="modal" tabindex="-1" id="myModal" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
@@ -123,9 +141,9 @@
           </div>
         </div>
       </div>
-      <!-- modal end -->
+      <!-- modal Large end -->
 
-      <!-- modal start -->
+      <!-- modal Small -->
       <div class="modal" tabindex="-1" id="modalSmall">
         <div class="modal-dialog modal-sm">
           <div class="modal-content" style="width: fit-content;">
@@ -138,7 +156,22 @@
           </div>
         </div>
       </div>
-      <!-- modal end -->
+      <!-- modal small end -->
+
+      <!-- modal Medium -->
+      <div class="modal" tabindex="-1" id="modalMedium">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title"></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" id="modalCloseMd" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- modal Medium end -->
 
       @yield('content')
 
