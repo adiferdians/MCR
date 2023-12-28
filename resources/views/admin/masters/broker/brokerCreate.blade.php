@@ -27,20 +27,12 @@
         </div>
     </div>
     <br><br>
-    <button class="btn btn-primary mr-2" id="send">Submit</button>
+    <button class="btn btn-primary mr-2" id="send" onclick="sendBroker()">Submit</button>
     <button class="btn btn-dark" id="cancle">Cancel</button>
 </div>
 
 <script>
-    $(document).ready(function() {
-        console.log("sapi");
-        $('#send').click(function() {
-            console.log("kopet");
-        });
-    });
-
     $('#send').click(function() {
-        console.log("sapoi");
         const name = $('#name').val();
         const telephone = $('#telephone').val();
         const bank = $('#bank').val();
@@ -77,8 +69,8 @@
             })
         })
     })
-    
-    $('#cancle').click(function() {
-        console.log("kopet");
-    });
+
+    $("#modalClose").click(function() {
+        $('#myModal').modal('hide');
+    })
 </script>

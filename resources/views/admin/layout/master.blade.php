@@ -21,9 +21,6 @@
   <!-- Add jQuery Library -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-  <!-- Include jQuery (required for Bootstrap) -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
   <!-- Include Popper.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
@@ -84,8 +81,8 @@
           <div class="collapse @yield('Collapse')" id="ui-basic">
             <ul class="nav flex-column sub-menu">
               <li class="nav-item"> <a class="nav-link @yield('Broker')" href="/broker">Boker</a></li>
-              <li class="nav-item"> <a class="nav-link @yield('certBody')" href="/certification-body">Certification Body</a></li>
-              <li class="nav-item"> <a class="nav-link @yield('role')" href="/role">Role</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('CertBody')" href="/certification-body">Certification Body</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('Role')" href="/role">Role</a></li>
               <li class="nav-item"> <a class="nav-link @yield('Standard')" href="/standard">Standard</a></li>
               <li class="nav-item"> <a class="nav-link @yield('User')" href="/user">User</a></li>
             </ul>
@@ -95,7 +92,6 @@
     </nav>
     <!-- partial -->
     <div class="container-fluid page-body-wrapper">
-      <!-- partial:partials/_navbar.html -->
       <nav class="navbar p-0 fixed-top d-flex flex-row">
         <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
           <ul class="navbar-nav navbar-nav-right">
@@ -157,21 +153,6 @@
         </div>
       </div>
       <!-- modal small end -->
-
-      <!-- modal Medium -->
-      <div class="modal" tabindex="-1" id="modalMedium">
-        <div class="modal-dialog modal-md">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" id="modalCloseMd" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- modal Medium end -->
 
       @yield('content')
 

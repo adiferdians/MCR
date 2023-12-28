@@ -2,9 +2,13 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BrokerController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CertificateController;
+use App\Http\Controllers\CertificationBodyController;
 use App\Http\Controllers\ClientController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\StandardController;
 use App\Http\Controllers\VerificationController;
 
 /*
@@ -45,6 +49,22 @@ Route::middleware(['auth'])->group(function () {
     Route::post('client/changeStatus/{id}', [ClientController::class, 'changeStatus']);
     Route::post('client/changeConsultantStatus/{id}', [ClientController::class, 'changeConsultantStatus']);
     Route::post('client/delete/{id}', [ClientController::class, 'deleteClient']);
+
+    //Master Data Page
+    Route::get('broker', [BrokerController::class, 'index']);
+    Route::get('broker/create', [BrokerController::class, 'create']);
+    Route::post('broker/send', [BrokerController::class, 'send']);
+    Route::get('broker/getUpdate/{id}', [BrokerController::class, 'getUpdate']);
+    Route::post('broker/sendUpdate/{id}', [BrokerController::class, 'send']);
+    Route::post('broker/changeStatus/{id}', [BrokerController::class, 'changeStatus']);
+    Route::post('broker/delete/{id}', [BrokerController::class, 'deleteBroker']);
+
+    Route::get('certification-body', [CertificationBodyController::class, 'index']);
+    Route::get('standard', [StandardController::class, 'index']);
+
+    Route::get('role', [RoleController::class, 'index']);
+    Route::get('role/create', [RoleController::class, 'create']);
+    Route::post('role/send', [RoleController::class, 'send']);
 });
 
 
