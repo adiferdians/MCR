@@ -60,7 +60,20 @@ Route::middleware(['auth'])->group(function () {
     Route::post('broker/delete/{id}', [BrokerController::class, 'deleteBroker']);
 
     Route::get('certification-body', [CertificationBodyController::class, 'index']);
+    Route::get('certification-body/create', [CertificationBodyController::class, 'create']);
+    Route::post('certification-body/send', [CertificationBodyController::class, 'send']);
+    Route::get('certification-body/getUpdate/{id}', [CertificationBodyController::class, 'getUpdate']);
+    Route::post('certification-body/sendUpdate/{id}', [CertificationBodyController::class, 'send']);
+    Route::post('certification-body/changeStatus/{id}', [CertificationBodyController::class, 'changeStatus']);
+    Route::post('certification-body/delete/{id}', [CertificationBodyController::class, 'deleteBroker']);
+
     Route::get('standard', [StandardController::class, 'index']);
+    Route::get('standard/create', [StandardController::class, 'create']);
+    Route::post('standard/send', [StandardController::class, 'send']);
+    Route::get('standard/getUpdate/{id}', [StandardController::class, 'getUpdate']);
+    Route::post('standard/sendUpdate/{id}', [StandardController::class, 'send']);
+    Route::post('standard/changeStatus/{id}', [StandardController::class, 'changeStatus']);
+    Route::post('standard/delete/{id}', [StandardController::class, 'deleteBroker']);
 
     Route::get('role', [RoleController::class, 'index']);
     Route::get('role/create', [RoleController::class, 'create']);
