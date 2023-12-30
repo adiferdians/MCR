@@ -208,22 +208,58 @@
 </div>
 
 <script>
-    $(document).ready(function() {
-        $("#consultations").hide();
-        $("#consultationTab").click(function() {
+        function consultation() {
             $("#certifications").hide();
             $("#consultations").show();
             $("#consultationTab").addClass("active")
             $("#certificationTab").removeClass("active")
-        });
+        }
 
-        $("#certificationTab").click(function() {
+        function certification() {
             $("#certifications").show();
             $("#consultations").hide();
             $("#consultationTab").removeClass("active")
             $("#certificationTab").addClass("active")
+        }
+
+        function addFunctionToURL(funcName) {
+            const url = new URL(window.location.href);
+            const searchParams = url.searchParams;
+            searchParams.delete(funcName);
+            searchParams.set(funcName, 'true');
+            url.search = searchParams.toString();
+            window.history.replaceState({}, '', url.href);
+        }
+
+        function removeParamFromURL(paramName) {
+            const url = new URL(window.location.href);
+            const searchParams = url.searchParams;
+            searchParams.delete(paramName);
+            url.search = searchParams.toString();
+            window.history.replaceState({}, '', url.href);
+        }
+
+        $("#consultationTab").click(function() {
+            consultation();
+            addFunctionToURL('consultation');
         });
-    });
+
+        $("#certificationTab").click(function() {
+            certification();
+            removeParamFromURL('consultation');
+        });
+
+        function getConsultationValueFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('consultation');
+        }
+
+        const consultationValue = getConsultationValueFromURL();
+        if (consultationValue) {
+            consultation();
+        } else {
+            $("#consultations").hide();
+        }
 
     $('#addClient').click(function() {
         axios.get('/client/create')
