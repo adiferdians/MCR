@@ -6,6 +6,9 @@ use App\Models\Client;
 use App\Models\serviceCertification;
 use App\Models\surveillanceCertification;
 use App\Models\serviceConsultation;
+use App\Models\Standard;
+use App\Models\Broker;
+use App\Models\certification_body;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Validator;
@@ -26,8 +29,6 @@ class ClientController extends Controller
                 'clients.address',
                 'service_certifications.certification_id',
                 'service_certifications.name',
-                'service_certifications.agency',
-                'service_certifications.status',
                 'service_certifications.notes',
                 'surveillance_certifications.surveillance_1',
                 'surveillance_certifications.surveillance_2',
@@ -50,7 +51,14 @@ class ClientController extends Controller
 
     function create()
     {
-        return view("admin.client.clientCreate");
+        $broker = Broker::orderBy('name', 'asc')->get()->all();
+        $standard = Standard::orderBy('name', 'asc')->get()->all();
+        $certBody = certification_body::orderBy('name', 'asc')->get()->all();
+        return view("admin.client.clientCreate", [
+            'standard' => $standard,
+            'certBody' => $certBody,
+            'broker' => $broker,
+        ]);
     }
 
     function send(Request $request)
@@ -62,14 +70,15 @@ class ClientController extends Controller
             'contact' => "required",
             'picContact' => "required",
             'service' => "required",
-            'agency' => $request->service == "Certification" ? "required" : "",
+            'certStandard' => $request->service == "Certification" ? "required" : "",
+            'certBody' => $request->service == "Certification" ? "required" : "",
+            'certPrice' => $request->service == "Certification" ? "required" : "",
+            'projName' => $request->service == "Certification" ? "required" : "",
             'startDate' => $request->service == "Certification" ? "required" : "",
-            'status' => $request->service == "Certification" ? "required" : "",
             'notes' => $request->service == "Certification" ? "required" : "",
             'surveillance_1' => $request->service == "Certification" ? "required" : "",
             'surveillance_2' => $request->service == "Certification" ? "required" : "",
             'count' => $request->service == "Certification" ? "required" : "",
-            'consultationName' => $request->service == "Consultation" ? "required" : "",
             'consultationNotes' => $request->service == "Consultation" ? "required" : "",
             'consultationStartDate' => $request->service == "Consultation" ? "required" : "",
             'consultationStatus' => $request->service == "Consultation" ? "required" : ""
@@ -87,6 +96,67 @@ class ClientController extends Controller
 
         DB::beginTransaction();
         try {
+            $certBody = $request->certBody;
+            $certBody_2 = $request->certBody_2;
+            $certBody_3 = $request->certBody_3;
+            $certBody_4 = $request->certBody_4;
+
+            $certPrice = $request->certPrice;
+            $certPrice_2 = $request->certPrice_2;
+            $certPrice_3 = $request->certPrice_3;
+            $certPrice_4 = $request->certPrice_4;
+
+            $certStandard = $request->certStandard;
+            $certStandard_2 = $request->certStandard_2;
+            $certStandard_3 = $request->certStandard_3;
+            $certStandard_4 = $request->certStandard_4;
+
+
+            $projDetil = [
+                'Certificate Standard' => $certStandard,
+                'Certificate Body' => $certBody,
+                'Certificate Price' => $certPrice,
+
+                'Certificate Standard 2' => $certStandard_2,
+                'Certificate Body 2' => $certBody_2,
+                'Certificate Price 2' => $certPrice_2,
+
+                'Certificate Standard 3' => $certStandard_3,
+                'Certificate Body 3' => $certBody_3,
+                'Certificate Price 3' => $certPrice_3,
+
+                'Certificate Body 4' => $certBody_4,
+                'Certificate Price 4' => $certPrice_4,
+                'Certificate Standard 4' => $certStandard_4,
+            ];
+
+            $consPrice = $request->consPrice;
+            $consPrice_2 = $request->consPrice_2;
+            $consPrice_3 = $request->consPrice_3;
+            $consPrice_4 = $request->consPrice_4;
+
+            $consStandard = $request->consStandard;
+            $consStandard_2 = $request->consStandard_2;
+            $consStandard_3 = $request->consStandard_3;
+            $consStandard_4 = $request->consStandard_4;
+
+            $consProjDetil = [
+                'Consultation Standard' => $consStandard,
+                'Consultation Price' => $consPrice,
+
+                'Consultation Standard 2' => $consStandard_2,
+                'Consultation Price 2' => $consPrice_2,
+
+                'Consultation Standard 3' => $consStandard_3,
+                'Consultation Price 3' => $consPrice_3,
+
+                'Consultation Standard 4' => $consStandard_4,
+                'Consultation Price 4' => $consPrice_4,
+            ];
+
+            $dataProjectCertification = json_encode($projDetil);
+            $dataProjectConsultation = json_encode($consProjDetil);
+
             if ($request->service == "Certification") {
                 $dataSurvelliance = [
                     'surveillance_1' => $request->surveillance_1,
@@ -97,19 +167,23 @@ class ClientController extends Controller
                 $surveillanceId = $surveillance->id;
 
                 $dataCertification = [
-                    'name' => $request->service,
-                    'agency' => $request->agency,
+                    'name' => $request->projName,
                     'start_date' => $request->startDate,
-                    'status' => $request->status,
                     'notes' => $request->notes,
+                    'project_detil' => $dataProjectCertification,
+                    'broker' => $request->brokerCertification,
+                    'broker_price' => $request->brokerPriceCertification,
                     'surveillance_id' => $surveillanceId
                 ];
                 $certification = ServiceCertification::create($dataCertification);
                 $certificationId = $certification->id;
             } else if ($request->service == "Consultation") {
                 $dataConsultation = [
-                    'name' => $request->consultationName,
+                    'name' => $request->consProjName,
                     'start_date' => $request->consultationStartDate,
+                    'project_detil' => $dataProjectConsultation,
+                    'broker' => $request->brokerConsultation,
+                    'broker_price' => $request->brokerPriceConsultation,
                     'status' => $request->consultationStatus,
                     'notes' => $request->consultationNotes,
                 ];
@@ -167,9 +241,16 @@ class ClientController extends Controller
             ->where('client_id', $id)
             ->first();
 
+        $broker = Broker::orderBy('name', 'asc')->get()->all();
+        $standard = Standard::orderBy('name', 'asc')->get()->all();
+        $certBody = certification_body::orderBy('name', 'asc')->get()->all();
+
         return view('admin.client.clientUpdate', [
             'certification' => $clientCertification,
-            'consultation' => $clientConsultation
+            'consultation' => $clientConsultation,
+            'standard' => $standard,
+            'certBody' => $certBody,
+            'broker' => $broker,
         ]);
     }
 
@@ -182,14 +263,11 @@ class ClientController extends Controller
             'contact' => "required",
             'picContact' => "required",
             'service' => "required",
-            'agency' => $request->service == "Certification" ? "required" : "",
             'startDate' => $request->service == "Certification" ? "required" : "",
-            'status' => $request->service == "Certification" ? "required" : "",
             'notes' => $request->service == "Certification" ? "required" : "",
             'surveillance_1' => $request->service == "Certification" ? "required" : "",
             'surveillance_2' => $request->service == "Certification" ? "required" : "",
             'count' => $request->service == "Certification" ? "required" : "",
-            'consultationName' => $request->service == "Consultation" ? "required" : "",
             'consultationNotes' => $request->service == "Consultation" ? "required" : "",
             'consultationStartDate' => $request->service == "Consultation" ? "required" : "",
             'consultationStatus' => $request->service == "Consultation" ? "required" : ""
@@ -217,6 +295,66 @@ class ClientController extends Controller
                 ->where('clients.client_id', '=', $id)
                 ->first();
 
+            $certBody = $request->certBody;
+            $certBody_2 = $request->certBody_2;
+            $certBody_3 = $request->certBody_3;
+            $certBody_4 = $request->certBody_4;
+
+            $certPrice = $request->certPrice;
+            $certPrice_2 = $request->certPrice_2;
+            $certPrice_3 = $request->certPrice_3;
+            $certPrice_4 = $request->certPrice_4;
+
+            $certStandard = $request->certStandard;
+            $certStandard_2 = $request->certStandard_2;
+            $certStandard_3 = $request->certStandard_3;
+            $certStandard_4 = $request->certStandard_4;
+
+            $projDetil = [
+                'Certificate Standard' => $certStandard,
+                'Certificate Body' => $certBody,
+                'Certificate Price' => $certPrice,
+
+                'Certificate Standard 2' => $certStandard_2,
+                'Certificate Body 2' => $certBody_2,
+                'Certificate Price 2' => $certPrice_2,
+
+                'Certificate Standard 3' => $certStandard_3,
+                'Certificate Body 3' => $certBody_3,
+                'Certificate Price 3' => $certPrice_3,
+
+                'Certificate Body 4' => $certBody_4,
+                'Certificate Price 4' => $certPrice_4,
+                'Certificate Standard 4' => $certStandard_4,
+            ];
+
+            $consPrice = $request->consPrice;
+            $consPrice_2 = $request->consPrice_2;
+            $consPrice_3 = $request->consPrice_3;
+            $consPrice_4 = $request->consPrice_4;
+
+            $consStandard = $request->consStandard;
+            $consStandard_2 = $request->consStandard_2;
+            $consStandard_3 = $request->consStandard_3;
+            $consStandard_4 = $request->consStandard_4;
+
+            $consProjDetil = [
+                'Consultation Standard' => $consStandard,
+                'Consultation Price' => $consPrice,
+
+                'Consultation Standard 2' => $consStandard_2,
+                'Consultation Price 2' => $consPrice_2,
+
+                'Consultation Standard 3' => $consStandard_3,
+                'Consultation Price 3' => $consPrice_3,
+
+                'Consultation Standard 4' => $consStandard_4,
+                'Consultation Price 4' => $consPrice_4,
+            ];
+
+            $dataProjectCertification = json_encode($projDetil);
+            $dataProjectConsultation = json_encode($consProjDetil);
+
             if ($request->service == "Certification") {
                 $dataSurvelliance = [
                     'surveillance_1' => $request->surveillance_1,
@@ -235,10 +373,11 @@ class ClientController extends Controller
                 }
 
                 $dataCertification = [
-                    'name' => $request->service,
-                    'agency' => $request->agency,
+                    'name' => $request->projName,
+                    'project_detil' => $dataProjectCertification,
+                    'broker' => $request->brokerCertification,
+                    'broker_price' => $request->brokerPriceCertification,
                     'start_date' => $request->startDate,
-                    'status' => $request->status,
                     'notes' => $request->notes,
                     'surveillance_id' => $clientCertification ? $clientCertification->surveillance_id : $surveillanceId
                 ];
@@ -251,8 +390,11 @@ class ClientController extends Controller
                 }
             } else if ($request->service == "Consultation") {
                 $dataConsultation = [
-                    'name' => $request->consultationName,
+                    'name' => $request->projName,
                     'start_date' => $request->consultationStartDate,
+                    'project_detil' => $dataProjectConsultation,
+                    'broker' => $request->brokerConsultation,
+                    'broker_price' => $request->brokerPriceConsultation,
                     'status' => $request->consultationStatus,
                     'notes' => $request->consultationNotes,
                 ];
@@ -308,7 +450,7 @@ class ClientController extends Controller
                 ]
             ], 422);
         }
-        
+
         DB::beginTransaction();
         try {
             $data = [
@@ -342,7 +484,7 @@ class ClientController extends Controller
                 ]
             ], 422);
         }
-        
+
         DB::beginTransaction();
         try {
             $data = [

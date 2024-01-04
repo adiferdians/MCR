@@ -10,18 +10,18 @@ class DashboardController extends Controller
 {
     public function dashboard()
     {
-        $certificationActive = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
-            ->where('clients.service', '=', 'Certification')
-            ->where('service_certifications.status', '=', 'Active')
-            ->count();
-        $certificationWithdraw = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
-            ->where('clients.service', '=', 'Certification')
-            ->where('service_certifications.status', '=', 'Withdraw')
-            ->count();
-        $certificationSuspended = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
-            ->where('clients.service', '=', 'Certification')
-            ->where('service_certifications.status', '=', 'Suspended')
-            ->count();
+        // $certificationActive = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+        //     ->where('clients.service', '=', 'Certification')
+        //     ->where('service_certifications.status', '=', 'Active')
+        //     ->count();
+        // $certificationWithdraw = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+        //     ->where('clients.service', '=', 'Certification')
+        //     ->where('service_certifications.status', '=', 'Withdraw')
+        //     ->count();
+        // $certificationSuspended = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+        //     ->where('clients.service', '=', 'Certification')
+        //     ->where('service_certifications.status', '=', 'Suspended')
+        //     ->count();
 
         $consultationDone = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
             ->where('clients.service', '=', 'Consultation')
@@ -49,9 +49,9 @@ class DashboardController extends Controller
             'countCertificateActive' => $certificateActive,
             'countCertificateWithdraw' => $certificateWithdraw,
             'countCertificateSuspended' => $certificateSuspended,
-            'countCertificationActive' => $certificationActive,
-            'countCertificationWithdraw' => $certificationWithdraw,
-            'countCertificationSuspended' => $certificationSuspended,
+            // 'countCertificationActive' => $certificationActive,
+            // 'countCertificationWithdraw' => $certificationWithdraw,
+            // 'countCertificationSuspended' => $certificationSuspended,
             'countConsultationDone' => $consultationDone,
             'countConsultationOnProgress' => $consultationOnProgress,
             'countConsultationPending' => $consultationPending,

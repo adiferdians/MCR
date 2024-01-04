@@ -33,13 +33,11 @@
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
                                         <th>PIC</th>
-                                        <th>AGENCY</th>
-                                        <th>NOTES</th>
                                         <th>SRVLC 1</th>
                                         <th>SRVLC 2</th>
                                         <th>COUNT</th>
                                         <th>NOTIFICATION</th>
-                                        <th>STATUS</th>
+                                        <th>NOTES</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -47,13 +45,11 @@
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
                                         <th>PIC</th>
-                                        <th>AGENCY</th>
-                                        <th>NOTES</th>
                                         <th>SRVLC 1</th>
                                         <th>SRVLC 2</th>
                                         <th>COUNT</th>
                                         <th>NOTIFICATION</th>
-                                        <th>STATUS</th>
+                                        <th>NOTES</th>
                                     </tr>
                                 </tfoot>
                                 @foreach($clientCertification as $certification)
@@ -74,8 +70,6 @@
                                         </td>
                                         <td>{{$certification->company_name}}</td>
                                         <td>{{$certification->pic}}</td>
-                                        <td>{{$certification->agency}}</td>
-                                        <td>{{$certification->notes}}</td>
                                         <td>{{$certification->surveillance_1}}</td>
                                         <td>{{$certification->surveillance_2}}</td>
                                         <td>{{$certification->count == "1" ? "Srv 1" : "Srv 2" }}</td>
@@ -100,20 +94,7 @@
                                             }
                                             @endphp
                                         </td>
-                                        <td>
-                                            <div class="dropdown">
-                                                <button class="btn {{ $certification->status == 'Active' ? 'btn-success' : ($certification->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    {{$certification->status}}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
-                                                    <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('Active', '{{$certification->certification_id}}')">Active</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('Withdraw', '{{$certification->certification_id}}')">Withdraw</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Suspended', '{{$certification->certification_id}}')">Suspended</button>
-                                                </div>
-                                            </div>
-                                        </td>
+                                        <td>{{$certification->notes}}</td>
                                     </tr>
                                 </tbody>
                                 @endforeach
@@ -284,47 +265,6 @@
                 console.log(error);
             });
     }
-
-    function changeStatus(status, id) {
-        Swal.fire({
-            title: 'Are you sure you want to change the Client status?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Change'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (result.isConfirmed) {
-                    axios.post('/client/changeStatus/' + id, {
-                            status,
-                        }).then(() => {
-                            Swal.fire({
-                                title: 'Success',
-                                position: 'top-end',
-                                icon: 'success',
-                                text: 'Status Changed!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1600);
-                        })
-                        .catch((err) => {
-                            Swal.fire({
-                                title: 'Error',
-                                position: 'top-end',
-                                icon: 'error',
-                                text: err,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        });
-                }
-            }
-        })
-    };
 
     function changeConsultantStatus(status, id) {
         Swal.fire({
