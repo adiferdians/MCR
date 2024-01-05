@@ -42,15 +42,12 @@
                             <div class="col-8 col-sm-12 col-xl-8 my-auto">
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
                                     <h5 class="mb-0">Active</h5>
-                                    <p class="text-success ml-2 mb-0 font-weight-medium">{{$countCertificationActive}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
                                     <h5 class="mb-0">Withdrawed</h5>
-                                    <p class="text-warning ml-2 mb-0 font-weight-medium">{{$countCertificationWithdraw}} Pcs</p>
                                 </div>
                                 <div class="d-flex d-sm-block d-md-flex align-items-center card-dashboard">
                                     <h5 class="mb-0">Suspended</h5>
-                                    <p class="text-danger ml-2 mb-0 font-weight-medium">{{$countCertificationSuspended}} Pcs</p>
                                 </div>
                             </div>
                             <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
