@@ -105,6 +105,15 @@
     justify-content: space-between;
 }
 
+.split-column{
+    display: flex;
+}
+
+.add-btn{
+    display: flex;
+    padding-left: 0;
+}
+
 @media (max-width: 1024px) {
     .verif-container {
         display: block;

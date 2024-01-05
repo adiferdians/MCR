@@ -78,6 +78,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('role', [RoleController::class, 'index']);
     Route::get('role/create', [RoleController::class, 'create']);
     Route::post('role/send', [RoleController::class, 'send']);
+    Route::get('role/getUpdate/{id}', [RoleController::class, 'getUpdate']);
+    Route::post('role/sendUpdate/{id}', [RoleController::class, 'send']);
+    Route::post('role/changeStatus/{id}', [RoleController::class, 'changeStatus']);
+    Route::post('role/delete/{id}', [RoleController::class, 'deleteBroker']);
 });
 
 
