@@ -9,6 +9,7 @@ use App\Http\Controllers\CertificationBodyController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StandardController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 
 /*
@@ -82,6 +83,14 @@ Route::middleware(['auth'])->group(function () {
     Route::post('role/sendUpdate/{id}', [RoleController::class, 'send']);
     Route::post('role/changeStatus/{id}', [RoleController::class, 'changeStatus']);
     Route::post('role/delete/{id}', [RoleController::class, 'deleteBroker']);
+
+    Route::get('user', [UserController::class, 'index']);
+    Route::get('user/create', [UserController::class, 'create']);
+    Route::post('user/send', [UserController::class, 'send']);
+    Route::get('user/getUpdate/{id}', [UserController::class, 'getUpdate']);
+    Route::post('user/sendUpdate/{id}', [UserController::class, 'send']);
+    Route::post('user/changeStatus/{id}', [UserController::class, 'changeStatus']);
+    Route::post('user/delete/{id}', [UserController::class, 'deleteBroker']);
 });
 
 
