@@ -29,6 +29,7 @@ class RoleController extends Controller
         $validate = Validator::make($request->all(), [
             'name'   => 'required',
             'status'   => 'required',
+            'role'   => 'required',
         ]);
 
         if ($validate->fails()) {
@@ -46,6 +47,7 @@ class RoleController extends Controller
             $data = [
                 'name' => $request->name,
                 'status' => $request->status,
+                'authorization' => $request->role,
                 'created_at' => Carbon::now()->toDateTimeString(),
                 'updated_at' => Carbon::now()->toDateTimeString(),
             ];

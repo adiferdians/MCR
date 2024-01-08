@@ -13,6 +13,18 @@
         </select>
     </div>
 </div>
+<div class="form-group">
+    <label for="surveillance_2">Role</label>
+    <div class="dropdown">
+        <select class="form-control custom-select" id="role">
+            <option disabled selected>Select a Role</option>
+            <option value="1">Super Admin</option>
+            <option value="2">Admin</option>
+            <option value="3">Sales</option>
+            <option value="4">Operation</option>
+        </select>
+    </div>
+</div>
 <button type="submit" class="btn btn-primary mr-2" id="send">Submit</button>
 <button class="btn btn-dark" id="reset">Reset</button>
 
@@ -20,10 +32,12 @@
     $('#send').click(function() {
         const name = $('#name').val();
         const status = $('#status').val();
+        const role = $('#role').val();
 
         axios.post('/role/send', {
             name,
             status,
+            role
         }).then((response) => {
             Swal.fire({
                 title: 'Success...',

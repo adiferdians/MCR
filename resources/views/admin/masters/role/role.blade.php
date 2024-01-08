@@ -24,6 +24,7 @@
                                         <th>ACTION</th>
                                         <th>NAME</th>
                                         <th>STATUS</th>
+                                        <th>AUTHORIZATION</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
@@ -31,6 +32,7 @@
                                         <th>ACTION</th>
                                         <th>Name</th>
                                         <th>STATUS</th>
+                                        <th>AUTHORIZATION</th>
                                     </tr>
                                 </tfoot>
                                 @foreach($data as $role)
@@ -49,17 +51,27 @@
                                         <td>{{$role->name}}</td>
                                         <td>
                                             <div class="dropdown">
-                                                <button class="btn {{ $role->status == 'active' ? 'btn-success' : ($role->status == 'withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn {{ $role->status == 'Active' ? 'btn-success' : ($role->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$role->status}}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
-                                                    <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('active', '{{$role->id}}')">Active</button>
+                                                    <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('Active', '{{$role->id}}')">Active</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('withdraw', '{{$role->id}}')">Withdraw</button>
+                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('Withdraw', '{{$role->id}}')">Withdraw</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('suspended', '{{$role->id}}')">suspended</button>
+                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Suspended', '{{$role->id}}')">Suspended</button>
                                                 </div>
                                             </div>
+                                        </td>
+                                        <td>@if($role->authorization == 1)
+                                            Super Admin
+                                            @elseif($role->authorization == 2)
+                                            Admin
+                                            @elseif($role->authorization == 3)
+                                            Sales
+                                            @elseif($role->authorization == 4)
+                                            Operation
+                                            @endif
                                         </td>
                                     </tr>
                                 </tbody>
@@ -91,7 +103,7 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 if (result.isConfirmed) {
-                    axios.post('/certificate/changeStatus/' + id, {
+                    axios.post('/role/changeStatus/' + id, {
                             status,
                         }).then(() => {
                             Swal.fire({
