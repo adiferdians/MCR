@@ -45,10 +45,9 @@
             <div class="dropdown">
                 <select class="form-control custom-select" id="role">
                     <option disabled selected>Select a Role</option>
-                    <option value="1">Super Admin</option>
-                    <option value="2">Admin</option>
-                    <option value="3">Sales</option>
-                    <option value="4">Operation</option>
+                    @foreach($role as $roles)
+                    <option value="{{ $roles->authorization }}">{{ $roles->name }}</option>
+                    @endforeach
                 </select>
             </div>
         </div>

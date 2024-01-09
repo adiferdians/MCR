@@ -18,6 +18,7 @@ class AuthController extends Controller
         if (Auth::attempt($request->only('email', 'password'))) {
             $user = Auth::user();
             session()->put('name', $user->name);
+            session()->put('role', $user->id_role);
 
             return response()->json([
                 'success' => true,

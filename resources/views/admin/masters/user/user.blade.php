@@ -2,7 +2,7 @@
 @section('content')
 @section('Master', 'active')
 @section('Collapse', 'show')
-@section('Standard', 'active')
+@section('User', 'active')
 @section('title', 'Master Standard')
 
 <div class="main-panel">
@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-certificate">
-                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addUser" data-toggle="dropdown" aria-expanded="false" href="#">+ Create Standard</a>
+                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addUser" data-toggle="dropdown" aria-expanded="false" 
+                            {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}}>+ Create Standard</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover" style="text-align: center;">
@@ -46,10 +47,10 @@
                                     <tr>
                                         <td>
                                             <div style="display: flex; justify-content: center;">
-                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updUser({{$user->id}})">
+                                                <button class="btn btn-primary actBtn" {{ session('role') == 3 ? 'hidden' : ''}} title="Edit" id="update" onclick="updUser({{$user->id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delUser({{$user->id}})">
+                                                <button class="btn btn-danger actBtn" {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}} title="Hapus" onclick="delUser({{$user->id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
@@ -59,7 +60,7 @@
                                         <td>{{$user->division}}</td>
                                         <td>{{$user->number}}</td>
                                         <td>
-                                            <div class="dropdown">
+                                            <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
                                                 <button class="btn {{ $user->status == 'Active' ? 'btn-success' : ($user->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$user->status}}
                                                 </button>
@@ -72,7 +73,16 @@
                                                 </div>
                                             </div>
                                         </td>
-                                        <td>{{$user->id_role}}</td>
+                                        <td>@if($user->id_role == 1)
+                                            Super Admin
+                                            @elseif($user->id_role == 2)
+                                            Admin
+                                            @elseif($user->id_role == 3)
+                                            Sales
+                                            @elseif($user->id_role == 4)
+                                            Operation
+                                            @endif
+                                        </td>
                                     </tr>
                                 </tbody>
                                 @endforeach

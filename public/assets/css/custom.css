@@ -114,6 +114,11 @@
     padding-left: 0;
 }
 
+.disabled{
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 @media (max-width: 1024px) {
     .verif-container {
         display: block;

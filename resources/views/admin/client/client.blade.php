@@ -23,7 +23,8 @@
                                 </ul>
                             </div>
                             <div>
-                                <a class="nav-link btn create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false">+ Create New Client Data</a>
+                                <a class="nav-link btn create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false"
+                                {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>+ Create New Client Data</a>
                             </div>
                         </div>
                         <div class="table-responsive" id="certifications">
@@ -63,7 +64,8 @@
                                                 <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="detailClient({{$certification->client_id}})">
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$certification->client_id}})">
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$certification->client_id}})" 
+                                                {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
@@ -142,7 +144,8 @@
                                                 <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="detailClient({{$consultation->client_id}})">
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$consultation->client_id}})">
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$consultation->client_id}})" 
+                                                {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>

@@ -44,7 +44,6 @@ class DashboardController extends Controller
         $certificateWithdraw = Certificate::where('status', '=', 'Withdraw')->count();
         $certificateSuspended = Certificate::where('status', '=', 'Suspended')->count();
 
-
         return view('admin.dashboard.index', [
             'countCertificateActive' => $certificateActive,
             'countCertificateWithdraw' => $certificateWithdraw,

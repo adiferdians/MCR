@@ -13,9 +13,11 @@ class RoleController extends Controller
     public function index()
     {
         $role = Role::orderByDesc('id')->paginate(10);
+        $count = Role::count();
 
         return view('admin.masters.role.role', [
-            'data' => $role
+            'data' => $role,
+            'count' => $count
         ]);
     }
 

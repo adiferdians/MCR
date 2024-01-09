@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Role;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Validator;
@@ -20,7 +21,10 @@ class UserController extends Controller
 
     function create()
     {
-        return view("admin.masters.user.userCreate");
+        $role = Role::orderBy('name', 'asc')->get()->all();
+        return view("admin.masters.user.userCreate", [
+            'role' => $role,
+        ]);
     }
 
     function send(Request $request)

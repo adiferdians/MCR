@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-certificate">
-                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addRole" data-toggle="dropdown" aria-expanded="false" href="#">+ Create Role</a>
+                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addRole" data-toggle="dropdown" aria-expanded="false" 
+                            {{ (session('role') == 3 || session('role') == 2 || $count == 4) ? 'hidden' : ''}}>+ Create Role</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover" style="text-align: center;">
@@ -40,17 +41,17 @@
                                     <tr>
                                         <td>
                                             <div style="display: flex; justify-content: center;">
-                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updRole({{$role->id}})">
+                                                <button class="btn btn-primary actBtn" {{ session('role') == 3 ? 'hidden' : ''}} title="Edit" id="update" onclick="updRole({{$role->id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delRole({{$role->id}})">
+                                                <button class="btn btn-danger actBtn" {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}} title="Hapus" onclick="delRole({{$role->id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
                                         <td>{{$role->name}}</td>
                                         <td>
-                                            <div class="dropdown">
+                                            <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
                                                 <button class="btn {{ $role->status == 'Active' ? 'btn-success' : ($role->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$role->status}}
                                                 </button>

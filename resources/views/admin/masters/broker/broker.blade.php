@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-certificate">
-                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addBroker" data-toggle="dropdown" aria-expanded="false" href="#">+ Create Broker</a>
+                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addBroker" data-toggle="dropdown" 
+                            {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}}>+ Create Broker</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover" style="text-align: center;">
@@ -44,20 +45,20 @@
                                     <tr>
                                         <td>
                                             <div style="display: flex; justify-content: center;">
-                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updBroker({{$broker->id}})">
+                                                <button class="btn btn-primary actBtn" title="Edit" id="update" {{ session('role') == 3 ? 'hidden' : ''}} onclick="updBroker({{$broker->id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delBroker({{$broker->id}})">
+                                                <button class="btn btn-danger actBtn" title="Hapus" {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}} onclick="delBroker({{$broker->id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>{{$broker->name}}</td>
+                                        <td>{{$broker->name,  session('role')}}</td>
                                         <td>{{$broker->phone}}</td>
                                         <td>{{$broker->bank}}</td>
                                         <td>{{$broker->bank_number}}</td>
                                         <td>
-                                            <div class="dropdown">
+                                            <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
                                                 <button class="btn {{ $broker->status == 'Active' ? 'btn-success' : ($broker->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$broker->status}}
                                                 </button>

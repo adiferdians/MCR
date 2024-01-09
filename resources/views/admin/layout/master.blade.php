@@ -99,7 +99,19 @@
               <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                 <div class="navbar-profile">
                   <img class="img-xs rounded-circle" src="assets/images/faces/profil.svg" alt="">
-                  <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ session('name') }}</p>
+                  <p class="mb-0 d-none d-sm-block navbar-profile-name">{{ ucfirst(session('name')) }} (
+                    @php
+                    $roles = [
+                    1 => 'Super Admin',
+                    2 => 'Admin',
+                    3 => 'Sales',
+                    4 => 'Operation',
+                    ];
+                    $role = $roles[session('role')] ?? 'Unknown Role';
+                    @endphp
+                    {{ $role }}
+                    )
+                  </p>
                   <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                 </div>
               </a>

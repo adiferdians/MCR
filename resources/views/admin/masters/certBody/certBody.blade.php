@@ -15,7 +15,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="add-certificate">
-                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addCertificateBody" data-toggle="dropdown" aria-expanded="false" href="#">+ Create Certificate Body</a>
+                            <a class="nav-link btn create-new-button" style="width: fit-content;" id="addCertificateBody" data-toggle="dropdown" aria-expanded="false" 
+                            {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}}>+ Create Certificate Body</a>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-hover" style="text-align: center;">
@@ -38,17 +39,17 @@
                                     <tr>
                                         <td>
                                             <div style="display: flex; justify-content: center;">
-                                                <button class="btn btn-primary actBtn" title="Edit" id="update" onclick="updCertificateBody({{$certificationBody->id}})">
+                                                <button class="btn btn-primary actBtn" title="Edit" {{ session('role') == 3 ? 'hidden' : ''}} id="update" onclick="updCertificateBody({{$certificationBody->id}})">
                                                     <i class="mdi mdi-pencil"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delCertificateBody({{$certificationBody->id}})">
+                                                <button class="btn btn-danger actBtn" title="Hapus" {{ (session('role') == 3 || session('role') == 2) ? 'hidden' : ''}} onclick="delCertificateBody({{$certificationBody->id}})">
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
                                         <td>{{$certificationBody->name}}</td>
                                         <td>
-                                            <div class="dropdown">
+                                            <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
                                                 <button class="btn {{ $certificationBody->status == 'Active' ? 'btn-success' : ($certificationBody->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$certificationBody->status}}
                                                 </button>
