@@ -50,15 +50,13 @@
                                         <td>{{$standard->name}}</td>
                                         <td>
                                             <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
-                                                <button class="btn {{ $standard->status == 'Active' ? 'btn-success' : ($standard->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn {{ $standard->status == 'Active' ? 'btn-success' : 'btn-danger' }} dropdown-toggle actBtn" type="button" id="status"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$standard->status}}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
                                                     <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('Active', '{{$standard->id}}')">Active</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('Withdraw', '{{$standard->id}}')">Withdraw</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Suspended', '{{$standard->id}}')">Suspended</button>
+                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Inactive', '{{$standard->id}}')">Inactive</button>
                                                 </div>
                                             </div>
                                         </td>

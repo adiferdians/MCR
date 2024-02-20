@@ -9,8 +9,7 @@
         <select class="form-control custom-select" id="status">
             <option disabled selected>Select a Status</option>
             <option {{$standard ? ($standard[0]->status === "Active" ? "selected" : "") : ''}}>Active</option>
-            <option {{$standard ? ($standard[0]->status === "Withdraw" ? "selected" : "") : ''}}>Withdraw</option>
-            <option {{$standard ? ($standard[0]->status === "Suspended" ? "selected" : "") : ''}}>Suspended</option>
+            <option {{$standard ? ($standard[0]->status === "Inactive" ? "selected" : "") : ''}}>Inactive</option>
         </select>
     </div>
 </div>
