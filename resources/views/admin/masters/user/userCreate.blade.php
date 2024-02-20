@@ -35,8 +35,7 @@
                 <select class="form-control custom-select" id="status">
                     <option disabled selected>Select a Status</option>
                     <option>Active</option>
-                    <option>Withdraw</option>
-                    <option>Suspended</option>
+                    <option>Inactive</option>
                 </select>
             </div>
         </div>

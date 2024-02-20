@@ -61,15 +61,13 @@
                                         <td>{{$user->number}}</td>
                                         <td>
                                             <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
-                                                <button class="btn {{ $user->status == 'Active' ? 'btn-success' : ($user->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn {{ $user->status == 'Active' ? 'btn-success' : 'btn-danger' }} dropdown-toggle actBtn" type="button" id="status"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$user->status}}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
                                                     <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('Active', '{{$user->id}}')">Active</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('Withdraw', '{{$user->id}}')">Withdraw</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Suspended', '{{$user->id}}')">Suspended</button>
+                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Inactive', '{{$user->id}}')">Inactive</button>
                                                 </div>
                                             </div>
                                         </td>
