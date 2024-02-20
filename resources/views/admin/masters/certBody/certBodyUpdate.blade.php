@@ -52,7 +52,7 @@
         })
     })
 
-    $("#modalClose").click(function() {
+    $("#cancle").click(function() {
         $('#myModal').modal('hide');
     })
 </script>

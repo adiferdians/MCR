@@ -2,7 +2,7 @@
 @section('content')
 @section('Master', 'active')
 @section('Collapse', 'show')
-@section('certBody', 'active')
+@section('CertBody', 'active')
 @section('title', 'Master Certification Body')
 
 <div class="main-panel">
@@ -50,15 +50,13 @@
                                         <td>{{$certificationBody->name}}</td>
                                         <td>
                                             <div class="dropdown {{ session('role') == 3 ? 'disabled' : ''}}">
-                                                <button class="btn {{ $certificationBody->status == 'Active' ? 'btn-success' : ($certificationBody->status == 'Withdraw' ? 'btn-warning' : 'btn-danger') }} dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <button class="btn {{ $certificationBody->status == 'Active' ? 'btn-success' : 'btn-danger' }} dropdown-toggle actBtn" type="button" id="status"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                     {{$certificationBody->status}}
                                                 </button>
                                                 <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
                                                     <button class="dropdown-item" type="button" data-value="active" onclick="changeStatus('Active', '{{$certificationBody->id}}')">Active</button>
                                                     <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="withdraw" onclick="changeStatus('Withdraw', '{{$certificationBody->id}}')">Withdraw</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Suspended', '{{$certificationBody->id}}')">Suspended</button>
+                                                    <button class="dropdown-item" type="button" data-value="draft" onclick="changeStatus('Inactive', '{{$certificationBody->id}}')">Inactive</button>
                                                 </div>
                                             </div>
                                         </td>
