@@ -21,8 +21,7 @@
         <select class="form-control custom-select" id="status">
             <option disabled selected>Select a Status</option>
             <option {{$broker ? ($broker[0]->status === "Active" ? "selected" : "") : ''}}>Active</option>
-            <option {{$broker ? ($broker[0]->status === "Withdraw" ? "selected" : "") : ''}}>Withdraw</option>
-            <option {{$broker ? ($broker[0]->status === "Suspended" ? "selected" : "") : ''}}>Suspended</option>
+            <option {{$broker ? ($broker[0]->status === "Inactive" ? "selected" : "") : ''}}>Inactive</option>
         </select>
     </div>
 </div>
@@ -70,7 +69,7 @@
         })
     })
 
-    $("#modalClose").click(function() {
+    $("#cancle").click(function() {
         $('#myModal').modal('hide');
     })
 </script>
