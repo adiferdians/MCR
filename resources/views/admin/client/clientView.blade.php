@@ -22,11 +22,11 @@
         <table class="table colorWheat">
             <tbody>
                 <tr>
-                    <td style="width: 150px;">Contact</td>
+                    <td style="width: 150px;">Number</td>
                     <td>{{ $certification ? $certification->company_contact : $consultation->company_contact}}</td>
                 </tr>
                 <tr>
-                    <td>PIC Contact</td>
+                    <td>Email</td>
                     <td>{{ $certification ? $certification->pic_contact : $consultation->pic_contact}}</td>
                 </tr>
                 <tr>
@@ -86,14 +86,16 @@
     <div class="col-lg-6">
         <table class="table colorWheat">
             <tbody>
+                @if(!empty($certification->broker))
                 <tr>
                     <td style="width: 150px;">Broker</td>
-                    <td>{{ $certification ? $certification->broker : ''}}</td>
+                    <td>{{ $certification->broker }}</td>
                 </tr>
                 <tr>
                     <td style="width: 150px;">Broker Price</td>
-                    <td>{{ $certification ? $certification->broker_price : ''}}</td>
+                    <td>{{ $certification->broker_price }}</td>
                 </tr>
+                @endif
                 <tr>
                     <td style="width: 150px;">Surveillance 1</td>
                     <td>{{ $certification ? $certification->surveillance_1 : ''}}</td>
@@ -130,10 +132,6 @@
                         }
                         @endphp
                     </td>
-                </tr>
-                <tr>
-                    <td>Notes</td>
-                    <td>{{ $certification ? $certification->notes : ''}}</td>
                 </tr>
             </tbody>
         </table>
@@ -188,6 +186,7 @@
     <div class="col-lg-6">
         <table class="table colorWheat">
             <tbody>
+                @if(!empty($consultation->broker))
                 <tr>
                     <td style="width: 150px;">Broker</td>
                     <td>{{ $consultation ? $consultation->broker : ''}}</td>
@@ -196,17 +195,14 @@
                     <td style="width: 150px;">Broker Price</td>
                     <td>{{ $consultation ? $consultation->broker_price : ''}}</td>
                 </tr>
-                <tr>
-                    <td style="width: 150px;">Status</td>
-                    <td>{{ $consultation ? $consultation->status : ''}}</td>
-                </tr>
-                <tr>
-                    <td>Notes</td>
-                    <td>{{$consultation ? $consultation->notes : ''}}</td>
-                </tr>
+                @endif
             </tbody>
         </table>
     </div>
+</div>
+
+<div style="display: flex; justify-content: center;">
+    <button class="btn btn-dark" id="close">Close</button>
 </div>
 
 <script>
@@ -219,5 +215,9 @@
             $('#certificationForm').hide();
             $('#consultationForm').show();
         }
+
+        $("#close").click(function() {
+            $("#myModal").modal('hide');
+        });
     });
 </script>

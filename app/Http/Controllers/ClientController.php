@@ -8,6 +8,7 @@ use App\Models\surveillanceCertification;
 use App\Models\serviceConsultation;
 use App\Models\Standard;
 use App\Models\Broker;
+use App\Models\Certificate;
 use App\Models\certification_body;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
@@ -21,19 +22,6 @@ class ClientController extends Controller
     {
         $clientCertification = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
             ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
-            ->select(
-                'clients.client_id',
-                'clients.company_name',
-                'clients.company_contact',
-                'clients.pic',
-                'clients.address',
-                'service_certifications.certification_id',
-                'service_certifications.name',
-                'service_certifications.notes',
-                'surveillance_certifications.surveillance_1',
-                'surveillance_certifications.surveillance_2',
-                'surveillance_certifications.count',
-            )
             ->where('clients.service', '=', 'Certification')
             ->orderBy('client_id', 'desc')
             ->paginate($perPage = 10, $columns = ['*'], $pageName = 'Certification');
@@ -75,13 +63,10 @@ class ClientController extends Controller
             'certPrice' => $request->service == "Certification" ? "required" : "",
             'projName' => $request->service == "Certification" ? "required" : "",
             'startDate' => $request->service == "Certification" ? "required" : "",
-            'notes' => $request->service == "Certification" ? "required" : "",
             'surveillance_1' => $request->service == "Certification" ? "required" : "",
             'surveillance_2' => $request->service == "Certification" ? "required" : "",
             'count' => $request->service == "Certification" ? "required" : "",
-            'consultationNotes' => $request->service == "Consultation" ? "required" : "",
             'consultationStartDate' => $request->service == "Consultation" ? "required" : "",
-            'consultationStatus' => $request->service == "Consultation" ? "required" : ""
         ]);
 
         if ($validate->fails()) {
@@ -169,7 +154,6 @@ class ClientController extends Controller
                 $dataCertification = [
                     'name' => $request->projName,
                     'start_date' => $request->startDate,
-                    'notes' => $request->notes,
                     'project_detil' => $dataProjectCertification,
                     'broker' => $request->brokerCertification,
                     'broker_price' => $request->brokerPriceCertification,
@@ -184,8 +168,6 @@ class ClientController extends Controller
                     'project_detil' => $dataProjectConsultation,
                     'broker' => $request->brokerConsultation,
                     'broker_price' => $request->brokerPriceConsultation,
-                    'status' => $request->consultationStatus,
-                    'notes' => $request->consultationNotes,
                 ];
                 $consultation = serviceConsultation::create($dataConsultation);
                 $consultationId = $consultation->id;
@@ -245,13 +227,182 @@ class ClientController extends Controller
         $standard = Standard::orderBy('name', 'asc')->get()->all();
         $certBody = certification_body::orderBy('name', 'asc')->get()->all();
 
+        if (!is_null($clientCertification) && isset($clientCertification->project_detil)) {
+            $certificationProject = json_decode($clientCertification->project_detil, true);
+        } else {
+            $certificationProject = null;
+        }
+        
+        if (!is_null($clientConsultation) && isset($clientConsultation->project_detil)) {
+            $consultationProject = json_decode($clientConsultation->project_detil, true);
+        } else {
+            $consultationProject = null;
+        }
+
         return view('admin.client.clientUpdate', [
             'certification' => $clientCertification,
             'consultation' => $clientConsultation,
+            'certificationProject' => $certificationProject,
+            'consultationProject' => $consultationProject,
             'standard' => $standard,
             'certBody' => $certBody,
             'broker' => $broker,
         ]);
+    }
+
+    function payment($id)
+    {
+        $clientCertification = Client::join('service_certifications', 'clients.service_id', '=', 'service_certifications.certification_id')
+            ->join('surveillance_certifications', 'service_certifications.surveillance_id', '=', 'surveillance_certifications.surveillance_id')
+            ->where('client_id', $id)
+            ->first();
+
+        $clientConsultation = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
+            ->where('client_id', $id)
+            ->first();
+
+        if ($clientCertification) {
+            $payment = json_decode($clientCertification->payment, true);
+            $certificationPayment = $payment ?? [];
+            $consultationPayment = [];
+        } else {
+            $payment = json_decode($clientConsultation->payment, true);
+            $certificationPayment = [];
+            $consultationPayment = $payment ?? [];
+        }
+
+        return view('admin.client.clientPayment', [
+            'certification' => $clientCertification,
+            'consultation' => $clientConsultation,
+            'consultationPayment' => $consultationPayment,
+            'certificationPayment' => $certificationPayment,
+        ]);
+    }
+
+    function sendPayment(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'dp1' => "integer",
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
+            ], 422);
+        }
+
+
+        DB::beginTransaction();
+        try {
+
+            $payment = [
+                'Down Payment 1' => $request->dp1,
+                'Down Payment 2' => $request->dp2,
+                'Down Payment 3' => $request->dp3,
+                'Down Payment 4' => $request->dp4,
+                'Down Payment 5' => $request->dp5,
+                'Settelment' => $request->settlement,
+            ];
+
+            $paymentDetil = json_encode($payment);
+
+            $dataClient = [
+                'payment' => $paymentDetil
+            ];
+
+            if ($request->service == "Certification") {
+                serviceCertification::where('certification_id', $request->id)->update($dataClient);
+            } else {
+                serviceConsultation::where('consultation_id', $request->id)->update($dataClient);
+            }
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan'], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage(), 'line' => $e->getLine()], 400);
+        }
+    }
+
+    function stage($id)
+    {
+        $clientConsultation = Client::join('service_consultations', 'clients.service_id', '=', 'service_consultations.consultation_id')
+            ->where('client_id', $id)
+            ->first();
+
+        $consultationStage = json_decode($clientConsultation->stage, true);
+
+        return view('admin.client.clientConsultationStage', [
+            'consultation' => $clientConsultation,
+            'consultationStage' => $consultationStage,
+        ]);
+    }
+
+    function sendStage(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'atDate' => "required",
+            'atPIC' => "required",
+            'atMandays' => "required",
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'success' => false,
+                'error' => [
+                    'message' => 'Validation Vailed!!',
+                    'details' => $validate->errors()->all()
+                ]
+            ], 422);
+        }
+
+        DB::beginTransaction();
+        try {
+
+            $stage = [
+                'Awarness Training Date' => $request->atDate,
+                'Awarness Training PIC' => $request->atPIC,
+                'Awarness Training Mandays' => $request->atMandays,
+                'Information Gathering Date' => $request->igDate,
+                'Information Gathering PIC' => $request->igPIC,
+                'Information Gathering Mandays' => $request->igMandays,
+                'Internal Audit Training Date' => $request->iatDate,
+                'Internal Audit Training PIC' => $request->iatPIC,
+                'Internal Audit Training Mandays' => $request->iatMandays,
+                'Internal Audit Date' => $request->iaDate,
+                'Internal Audit PIC' => $request->iaPIC,
+                'Internal Audit Mandays' => $request->iaMandays,
+                'Socialization Date' => $request->socDate,
+                'Socialization PIC' => $request->socPIC,
+                'Socialization Mandays' => $request->socMandays,
+                'External Audit Date' => $request->eaDate,
+                'External Audit PIC' => $request->eaPIC,
+                'External Audit Mandays' => $request->eaMandays,
+                'Done Date' => $request->doneDate,
+                'Done PIC' => $request->donePIC,
+                'Done Mandays' => $request->doneMandays,
+            ];
+
+            $stageConsultation = json_encode($stage);
+
+            $dataClient = [
+                'stage' => $stageConsultation
+            ];
+
+            serviceConsultation::where('consultation_id', $request->id)->update($dataClient);
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Data berhasil diinputkan'], 201);
+        } catch (\Exception $e) {
+            DB::rollback();
+
+            return response()->json(['success' => false, 'messages' => $e->getMessage(), 'line' => $e->getLine()], 400);
+        }
     }
 
     function sendUpdate(Request $request, $id)
@@ -264,13 +415,10 @@ class ClientController extends Controller
             'picContact' => "required",
             'service' => "required",
             'startDate' => $request->service == "Certification" ? "required" : "",
-            'notes' => $request->service == "Certification" ? "required" : "",
             'surveillance_1' => $request->service == "Certification" ? "required" : "",
             'surveillance_2' => $request->service == "Certification" ? "required" : "",
             'count' => $request->service == "Certification" ? "required" : "",
-            'consultationNotes' => $request->service == "Consultation" ? "required" : "",
             'consultationStartDate' => $request->service == "Consultation" ? "required" : "",
-            'consultationStatus' => $request->service == "Consultation" ? "required" : ""
         ]);
 
         if ($validate->fails()) {
@@ -311,21 +459,21 @@ class ClientController extends Controller
             $certStandard_4 = $request->certStandard_4;
 
             $projDetil = [
-                'Certificate Standard' => $certStandard,
-                'Certificate Body' => $certBody,
-                'Certificate Price' => $certPrice,
+                'Certification Standard' => $certStandard,
+                'Certification Body' => $certBody,
+                'Certification Price' => $certPrice,
 
-                'Certificate Standard 2' => $certStandard_2,
-                'Certificate Body 2' => $certBody_2,
-                'Certificate Price 2' => $certPrice_2,
+                'Certification Standard 2' => $certStandard_2,
+                'Certification Body 2' => $certBody_2,
+                'Certification Price 2' => $certPrice_2,
 
-                'Certificate Standard 3' => $certStandard_3,
-                'Certificate Body 3' => $certBody_3,
-                'Certificate Price 3' => $certPrice_3,
+                'Certification Standard 3' => $certStandard_3,
+                'Certification Body 3' => $certBody_3,
+                'Certification Price 3' => $certPrice_3,
 
-                'Certificate Body 4' => $certBody_4,
-                'Certificate Price 4' => $certPrice_4,
-                'Certificate Standard 4' => $certStandard_4,
+                'Certification Body 4' => $certBody_4,
+                'Certification Price 4' => $certPrice_4,
+                'Certification Standard 4' => $certStandard_4,
             ];
 
             $consPrice = $request->consPrice;
@@ -378,7 +526,6 @@ class ClientController extends Controller
                     'broker' => $request->brokerCertification,
                     'broker_price' => $request->brokerPriceCertification,
                     'start_date' => $request->startDate,
-                    'notes' => $request->notes,
                     'surveillance_id' => $clientCertification ? $clientCertification->surveillance_id : $surveillanceId
                 ];
 
@@ -390,13 +537,11 @@ class ClientController extends Controller
                 }
             } else if ($request->service == "Consultation") {
                 $dataConsultation = [
-                    'name' => $request->projName,
+                    'name' => $request->consProjName,
                     'start_date' => $request->consultationStartDate,
                     'project_detil' => $dataProjectConsultation,
                     'broker' => $request->brokerConsultation,
                     'broker_price' => $request->brokerPriceConsultation,
-                    'status' => $request->consultationStatus,
-                    'notes' => $request->consultationNotes,
                 ];
 
                 if ($request->service == "Certification" || $clientConsultationId) {
@@ -432,74 +577,6 @@ class ClientController extends Controller
             DB::rollback();
 
             return response()->json(['success' => false, 'messages' => $e->getMessage(), 'line' => $e->getLine()], 400);
-        }
-    }
-
-    public function changeStatus(Request $request, $id)
-    {
-        $validate = Validator::make($request->all(), [
-            'status'   => 'required'
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                'success' => false,
-                'error' => [
-                    'message' => 'Validation Vailed!!',
-                    'details' => $validate->errors()->all()
-                ]
-            ], 422);
-        }
-
-        DB::beginTransaction();
-        try {
-            $data = [
-                'status' => $request->status,
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ];
-
-            serviceCertification::where('certification_id', $id)->update($data);
-            DB::commit();
-
-            return response()->json(['success' => true, 'message' => 'Status berhasil diubah', 'data' => $data], 201);
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
-        }
-    }
-
-    public function changeConsultantStatus(Request $request, $id)
-    {
-        $validate = Validator::make($request->all(), [
-            'status'   => 'required'
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                'success' => false,
-                'error' => [
-                    'message' => 'Validation Vailed!!',
-                    'details' => $validate->errors()->all()
-                ]
-            ], 422);
-        }
-
-        DB::beginTransaction();
-        try {
-            $data = [
-                'status' => $request->status,
-                'updated_at' => Carbon::now()->toDateTimeString(),
-            ];
-
-            serviceConsultation::where('consultation_id', $id)->update($data);
-            DB::commit();
-
-            return response()->json(['success' => true, 'message' => 'Status berhasil diubah', 'data' => $data], 201);
-        } catch (\Exception $e) {
-            DB::rollback();
-
-            return response()->json(['success' => false, 'messages' => $e->getMessage()], 400);
         }
     }
 

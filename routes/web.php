@@ -45,10 +45,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('client/create', [ClientController::class, 'create']);
     Route::post('client/send', [ClientController::class, 'send']);
     Route::get('client/detail/{id}', [ClientController::class, 'detailClient']);
+    Route::get('client/stage/{id}', [ClientController::class, 'stage']);
+    Route::post('client/sendStage', [ClientController::class, 'sendStage']);
+    Route::get('client/payment/{id}', [ClientController::class, 'payment']);
+    Route::post('client/sendPayment', [ClientController::class, 'sendPayment']);
     Route::get('client/getUpdate/{id}', [ClientController::class, 'getUpdate']);
     Route::post('client/sendUpdate/{id}', [ClientController::class, 'sendUpdate']);
-    Route::post('client/changeStatus/{id}', [ClientController::class, 'changeStatus']);
-    Route::post('client/changeConsultantStatus/{id}', [ClientController::class, 'changeConsultantStatus']);
     Route::post('client/delete/{id}', [ClientController::class, 'deleteClient']);
 
     //Master Data Page

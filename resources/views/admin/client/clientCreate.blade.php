@@ -15,12 +15,12 @@
     </div>
     <div class="col-lg-6">
         <div class="form-group">
-            <label for="scope">Contact</label>
-            <input type="text" class="form-control" autocomplete="off" id="contact" rows="4" placeholder="Contact"></input>
+            <label for="scope">Number</label>
+            <input type="text" class="form-control" autocomplete="off" id="contact" rows="4" placeholder="Number"></input>
         </div>
         <div class="form-group">
-            <label for="surveillance_1">PIC Contact</label>
-            <input type="text" class="form-control" autocomplete="off" id="picContact" placeholder="PIC Contact">
+            <label for="surveillance_1">Email</label>
+            <input type="text" class="form-control" autocomplete="off" id="picContact" placeholder="Email">
         </div>
         <div class="form-group">
             <label for="service">Service</label>
@@ -74,25 +74,6 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <div class="form-check form-switch">
-                <input class="form-check-input" type="checkbox" role="switch" id="switchBroker">
-                <label class="form-check-label" style="color: white;" for="switchBroker">Use Broker</label>
-            </div>
-            <div class="split-column">
-                <div class="dropdown col-lg-6">
-                    <select class="form-control custom-select" id="brokerCertification" hidden>
-                        <option disabled selected>Broker</option>
-                        @foreach($broker as $option)
-                        <option>{{ $option->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="col-lg-6">
-                    <input type="text" class="form-control" autocomplete="off" id="brokerPriceCertification" placeholder="Input Price" hidden></input>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="col-lg-6">
         <div class="form-group">
@@ -114,8 +95,23 @@
             </div>
         </div>
         <div class="form-group">
-            <label for="scope">Notes</label>
-            <input type="text" class="form-control" autocomplete="off" id="notes" placeholder="Notes"></input>
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="switchBroker">
+                <label class="form-check-label" style="color: white;" for="switchBroker">Use Broker</label>
+            </div>
+            <div class="split-column">
+                <div class="dropdown col-lg-6">
+                    <select class="form-control custom-select" id="brokerCertification" hidden>
+                        <option disabled selected>Broker</option>
+                        @foreach($broker as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-6">
+                    <input type="text" class="form-control" autocomplete="off" id="brokerPriceCertification" placeholder="Input Price" hidden></input>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -147,6 +143,12 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="form-group">
+            <label for="address">Start Date</label>
+            <input type="date" class="form-control" autocomplete="off" id="consultationStartDate"></input>
+        </div>
         <div class="form-group">
             <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" role="switch" id="switchBrokerConsultation">
@@ -167,39 +169,21 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-6">
-        <div class="form-group">
-            <label for="address">Start Date</label>
-            <input type="date" class="form-control" autocomplete="off" id="consultationStartDate"></input>
-        </div>
-        <div class="form-group">
-            <label for="surveillance_2">Status</label>
-            <div class="dropdown">
-                <select class="form-control custom-select" id="consultationStatus">
-                    <option disabled selected>Select a Status</option>
-                    <option>On Progress</option>
-                    <option>Pending</option>
-                    <option>Done</option>
-                    <option>Overdue</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="notes">Notes</label>
-            <input type="text" class="form-control" autocomplete="off" id="consultationNotes" placeholder="Notes"></input>
-        </div>
-    </div>
 </div>
 
 <div style="display: flex; justify-content: center;">
     <button type="submit" class="btn btn-primary mr-2" id="send">Submit</button>
-    <button class="btn btn-dark" id="reset">Reset</button>
+    <button class="btn btn-dark" id="close">Close</button>
 </div>
 
 <script>
     $(document).ready(function() {
         $('#consultationForm').hide();
         $('#certificationForm').hide();
+
+        $("#close").click(function() {
+            $("#myModal").modal('hide');
+        });
 
         $("#service").change(function() {
             var selectedValue = $(this).val();
@@ -210,31 +194,6 @@
                 $('#certificationForm').hide();
                 $('#consultationForm').show();
             }
-        });
-
-        $("#reset").click(function() {
-            $("#idCompany").val('');
-            $("#compName").val('');
-            $("#address").val('');
-            $("#pic").val('');
-            $("#contact").val('');
-            $("#picContact").val('');
-            $("#service").val('Select a Services');
-
-            $("#idCertification").val('');
-            $("#serviceName").val('Select a Services');
-            $("#certificationAgency").val('');
-            $("#startDate").val('');
-            $("#status").val('Select a Services');
-            $("#Notes").val('');
-
-            $("#idSurveillance").val('');
-            $("#surveillance_1").val('');
-            $("#surveillance_2").val('');
-            $("#count").val('');
-
-            $('#consultationForm').hide();
-            $('#certificationForm').hide();
         });
 
         $('#switchBroker').on('click', function() {
@@ -257,42 +216,45 @@
             }
         });
 
-        var counter = 2;
-        var maxExecutions = 5;
+        var counterConsultation = 2;
+        var maxExecutionsConsultation = 5;
 
         $('#addFormConsultation').on('click', function() {
-            if (counter < maxExecutions) {
+            if (counterConsultation < maxExecutionsConsultation) {
                 var htmlCode = `
-                <div class="form-group" id="projDetil">
-                    <div class="split-column">
-                        <div class="dropdown col-lg-6">
-                            <select class="form-control custom-select" id="consStandard_${counter}">
-                                <option disabled selected>Standard</option>
-                                @foreach($standard as $option)
-                                <option>{{ $option->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="col-lg-5">
-                            <input type="text" class="form-control" autocomplete="off" id="consPrice_${counter}" placeholder="Input Price"></input>
+                    <div class="form-group" id="projDetil">
+                        <div class="split-column">
+                            <div class="dropdown col-lg-6">
+                                <select class="form-control custom-select" id="consStandard_${counterConsultation}">
+                                    <option disabled selected>Standard</option>
+                                    @foreach($standard as $option)
+                                    <option>{{ $option->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-lg-5">
+                                <input type="text" class="form-control" autocomplete="off" id="consPrice_${counterConsultation}" placeholder="Input Price"></input>
+                            </div>
                         </div>
                     </div>
-                </div>
-                `;
+                    `;
                 $('#consultationProject').after(htmlCode);
-                counter++;
+                counterConsultation++;
             } else {
                 $('#addFormConsultation').prop('disabled', true);
             }
         });
 
+
+        var counterCertification = 2;
+        var maxExecutionsCertification = 5;
         $('#addFromCertification').on('click', function() {
-            if (counter < maxExecutions) {
+            if (counterCertification < maxExecutionsCertification) {
                 var htmlCode = `
                     <div class="form-group">
                         <div class="split-column">
                             <div class="dropdown col-lg-4">
-                                <select class="form-control custom-select" id="certStandard_${counter}">
+                                <select class="form-control custom-select" id="certStandard_${counterCertification}">
                                     <option disabled selected>Standard</option>
                                     @foreach($standard as $option)
                                     <option>{{ $option->name }}</option>
@@ -300,7 +262,7 @@
                                 </select>
                             </div>
                             <div class="dropdown col-lg-4">
-                                <select class="form-control custom-select" id="certBody_${counter}">
+                                <select class="form-control custom-select" id="certBody_${counterCertification}">
                                     <option disabled selected>Certification Body</option>
                                     @foreach($certBody as $cert)
                                     <option>{{ $cert->name }}</option>
@@ -308,13 +270,13 @@
                                 </select>
                             </div>
                             <div class="col-lg-3">
-                                <input type="text" class="form-control" autocomplete="off" id="certPrice_${counter}" placeholder="Input Price">
+                                <input type="text" class="form-control" autocomplete="off" id="certPrice_${counterCertification}" placeholder="Input Price">
                             </div>
                         </div>
                     </div>
                 `;
                 $('#certificationProject').after(htmlCode);
-                counter++;
+                counterCertification++;
             } else {
                 $('#addFromCertification').prop('disabled', true);
             }
@@ -348,7 +310,6 @@
         const certPrice_5 = $('#certPrice_5').val();
         const brokerCertification = $('#brokerCertification').val();
         const brokerPriceCertification = $('#brokerPriceCertification').val();
-        const notes = $('#notes').val();
 
         const surveillance_1 = $('#surveillance_1').val();
         const surveillance_2 = $('#surveillance_2').val();
@@ -368,8 +329,6 @@
         const brokerConsultation = $('#brokerConsultation').val();
         const brokerPriceConsultation = $('#brokerPriceConsultation').val();
         const consultationStartDate = $('#consultationStartDate').val();
-        const consultationStatus = $('#consultationStatus').val();
-        const consultationNotes = $('#consultationNotes').val();
 
         axios.post('/client/send', {
             companyName,
@@ -398,7 +357,6 @@
             certPrice_5,
             brokerCertification,
             brokerPriceCertification,
-            notes,
             surveillance_1,
             surveillance_2,
             count,
@@ -416,8 +374,6 @@
             consPrice_5,
             brokerConsultation,
             brokerPriceConsultation,
-            consultationNotes,
-            consultationStatus,
             consultationStartDate,
         }).then((response) => {
             Swal.fire({

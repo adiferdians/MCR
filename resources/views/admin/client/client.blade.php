@@ -23,8 +23,7 @@
                                 </ul>
                             </div>
                             <div>
-                                <a class="nav-link btn create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false"
-                                {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>+ Create New Client Data</a>
+                                <a class="nav-link btn create-new-button" id="addClient" style="width: fit-content;" data-toggle="dropdown" aria-expanded="false" {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>+ Create New Client Data</a>
                             </div>
                         </div>
                         <div class="table-responsive" id="certifications">
@@ -33,24 +32,20 @@
                                     <tr>
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
-                                        <th>PIC</th>
-                                        <th>SRVLC 1</th>
-                                        <th>SRVLC 2</th>
-                                        <th>COUNT</th>
+                                        <th>CERTIFICATION</th>
+                                        <th>SURVEILLANCE</th>
                                         <th>NOTIFICATION</th>
-                                        <th>NOTES</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
-                                        <th>PIC</th>
-                                        <th>SRVLC 1</th>
-                                        <th>SRVLC 2</th>
-                                        <th>COUNT</th>
+                                        <th>CERTIFICATION</th>
+                                        <th>SURVEILLANCE</th>
                                         <th>NOTIFICATION</th>
-                                        <th>NOTES</th>
+                                        <th>STATUS</th>
                                     </tr>
                                 </tfoot>
                                 @foreach($clientCertification as $certification)
@@ -64,16 +59,13 @@
                                                 <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="detailClient({{$certification->client_id}})">
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$certification->client_id}})" 
-                                                {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$certification->client_id}})" {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>{{$certification->company_name}}</td>
-                                        <td>{{$certification->pic}}</td>
-                                        <td>{{$certification->surveillance_1}}</td>
-                                        <td>{{$certification->surveillance_2}}</td>
+                                        <td>{{ Str::limit($certification->company_name, 40)}}</td>
+                                        <td>{{ Str::limit($certification->name, 40) }}</td>
                                         <td>{{$certification->count == "1" ? "Srv 1" : "Srv 2" }}</td>
                                         <td>
                                             @php
@@ -96,7 +88,36 @@
                                             }
                                             @endphp
                                         </td>
-                                        <td>{{$certification->notes}}</td>
+                                        <td>
+                                            @php
+                                            $jsonData = $certification->payment;
+
+                                            if (!empty($jsonData)) {
+                                            $dataArray = json_decode($jsonData, true);
+
+                                            if (is_array($dataArray)) {
+                                            $lastKeyWithValueNotNull = null;
+
+                                            foreach ($dataArray as $key => $value) {
+                                            if ($value !== null) {
+                                            $lastKeyWithValueNotNull = $key;
+                                            }
+                                            }
+
+                                            echo $lastKeyWithValueNotNull;
+                                            } else {
+                                            echo "Invalid JSON format";
+                                            }
+                                            } else {
+                                            echo "Awaiting Payment";
+                                            }
+                                            @endphp
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-warning actBtn" title="Edit" id="update" onclick="clientPayment({{$certification->client_id}})">
+                                                <i class="mdi mdi-coin"></i>Payment
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 @endforeach
@@ -113,24 +134,18 @@
                                     <tr>
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
-                                        <th>CONTACT</th>
-                                        <th>PIC</th>
-                                        <th>SERVICE</th>
-                                        <th>START DATE</th>
+                                        <th>CONSULTATION</th>
+                                        <th>STAGE</th>
                                         <th>STATUS</th>
-                                        <th>NOTES</th>
                                     </tr>
                                 </thead>
                                 <tfoot>
                                     <tr>
                                         <th>ACTION</th>
                                         <th>COMPANY</th>
-                                        <th>CONTACT</th>
-                                        <th>PIC</th>
-                                        <th>SERVICE</th>
-                                        <th>START DATE</th>
+                                        <th>CONSULTATION</th>
+                                        <th>STAGE</th>
                                         <th>STATUS</th>
-                                        <th>NOTES</th>
                                     </tr>
                                 </tfoot>
                                 @foreach($clientConsultation as $consultation)
@@ -144,36 +159,71 @@
                                                 <button class="btn btn-info  actBtn" title="Detil" id="detil" onclick="detailClient({{$consultation->client_id}})">
                                                     <i class="mdi mdi-eye"></i>
                                                 </button>
-                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$consultation->client_id}})" 
-                                                {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>
+                                                <button class="btn btn-danger actBtn" title="Hapus" onclick="delClient({{$consultation->client_id}})" {{ (session('role') == 2 || session('role') == 4) ? 'hidden' : ''}}>
                                                     <i class="mdi mdi-delete-forever"></i>
                                                 </button>
                                             </div>
                                         </td>
-                                        <td>{{$consultation->company_name}}</td>
-                                        <td>{{$consultation->company_contact}}</td>
-                                        <td>{{$consultation->pic}}</td>
-                                        <td>{{$consultation->service}}</td>
-                                        <td>{{$consultation->start_date}}</td>
+                                        <td>{{ Str::limit($consultation->company_name, 40) }}</td>
+                                        <td>{{ Str::limit($consultation->name, 40) }}</td>
                                         <td>
-                                            <div class="dropdown">
-                                                <button class="btn {{ $consultation->status == 'Done' ? 'btn-success' : 
-                                                    ($consultation->status == 'Pending' ? 'btn-warning' : ($consultation->status == 'On Progress' ? 'btn-primary' : 'btn-danger')) }} 
-                                                    dropdown-toggle actBtn" type="button" id="status" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    {{$consultation->status}}
-                                                </button>
-                                                <div class="dropdown-menu" aria-labelledby="status" id="myDropdown">
-                                                    <button class="dropdown-item" type="button" data-value="Done" onclick="changeConsultantStatus('Done', '{{$consultation->consultation_id}}')">Done</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="On Progress" onclick="changeConsultantStatus('On Progress', '{{$consultation->consultation_id}}')">On Progress</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="Pending" onclick="changeConsultantStatus('Pending', '{{$consultation->consultation_id}}')">Pending</button>
-                                                    <div class="dropdown-divider"></div>
-                                                    <button class="dropdown-item" type="button" data-value="Overdue" onclick="changeConsultantStatus('Overdue', '{{$consultation->consultation_id}}')">Overdue</button>
-                                                </div>
-                                            </div>
+                                            @php
+                                            $jsonData = $consultation->stage;
+
+                                            if (!empty($jsonData)) {
+                                            $dataArray = json_decode($jsonData, true);
+
+                                            if (is_array($dataArray)) {
+                                            $lastKeyWithValueNotNull = null;
+
+                                            foreach ($dataArray as $key => $value) {
+                                            if ($value !== null) {
+                                            $lastKeyWithValueNotNull = $key;
+                                            }
+                                            }
+
+                                            echo $lastKeyWithValueNotNull;
+                                            } else {
+                                            echo "Invalid JSON format";
+                                            }
+                                            } else {
+                                            echo "Not Started";
+                                            }
+                                            @endphp
                                         </td>
-                                        <td>{{$consultation->notes}}</td>
+                                        <td>
+                                            @php
+                                            $jsonData = $consultation->payment;
+
+                                            if (!empty($jsonData)) {
+                                            $dataArray = json_decode($jsonData, true);
+
+                                            if (is_array($dataArray)) {
+                                            $lastKeyWithValueNotNull = null;
+
+                                            foreach ($dataArray as $key => $value) {
+                                            if ($value !== null) {
+                                            $lastKeyWithValueNotNull = $key;
+                                            }
+                                            }
+
+                                            echo $lastKeyWithValueNotNull;
+                                            } else {
+                                            echo "Invalid JSON format";
+                                            }
+                                            } else {
+                                            echo "Awaiting Payment";
+                                            }
+                                            @endphp
+                                        </td>
+                                        <td class="act-right">
+                                            <button class="btn btn-warning actBtn" title="Payment" onclick="clientPayment({{$consultation->client_id}})">
+                                                <i class="mdi mdi-coin"></i>Payment
+                                            </button>
+                                            <button class="btn btn-light actBtn" title="Stage" onclick="clientProcess({{$consultation->client_id}})">
+                                                <i class="mdi mdi-calendar-check"></i>Stage
+                                            </button>
+                                        </td>
                                     </tr>
                                 </tbody>
                                 @endforeach
@@ -192,63 +242,64 @@
 </div>
 
 <script>
-        function consultation() {
-            $("#certifications").hide();
-            $("#consultations").show();
-            $("#consultationTab").addClass("active")
-            $("#certificationTab").removeClass("active")
-        }
+    function consultation() {
+        $("#certifications").hide();
+        $("#consultations").show();
+        $("#consultationTab").addClass("active")
+        $("#certificationTab").removeClass("active")
+    }
 
-        function certification() {
-            $("#certifications").show();
-            $("#consultations").hide();
-            $("#consultationTab").removeClass("active")
-            $("#certificationTab").addClass("active")
-        }
+    function certification() {
+        $("#certifications").show();
+        $("#consultations").hide();
+        $("#consultationTab").removeClass("active")
+        $("#certificationTab").addClass("active")
+    }
 
-        function addFunctionToURL(funcName) {
-            const url = new URL(window.location.href);
-            const searchParams = url.searchParams;
-            searchParams.delete(funcName);
-            searchParams.set(funcName, 'true');
-            url.search = searchParams.toString();
-            window.history.replaceState({}, '', url.href);
-        }
+    function addFunctionToURL(funcName) {
+        const url = new URL(window.location.href);
+        const searchParams = url.searchParams;
+        searchParams.delete(funcName);
+        searchParams.set(funcName, 'true');
+        url.search = searchParams.toString();
+        window.history.replaceState({}, '', url.href);
+    }
 
-        function removeParamFromURL(paramName) {
-            const url = new URL(window.location.href);
-            const searchParams = url.searchParams;
-            searchParams.delete(paramName);
-            url.search = searchParams.toString();
-            window.history.replaceState({}, '', url.href);
-        }
+    function removeParamFromURL(paramName) {
+        const url = new URL(window.location.href);
+        const searchParams = url.searchParams;
+        searchParams.delete(paramName);
+        url.search = searchParams.toString();
+        window.history.replaceState({}, '', url.href);
+    }
 
-        $("#consultationTab").click(function() {
-            consultation();
-            addFunctionToURL('consultation');
-        });
+    $("#consultationTab").click(function() {
+        consultation();
+        addFunctionToURL('consultation');
+    });
 
-        $("#certificationTab").click(function() {
-            certification();
-            removeParamFromURL('consultation');
-        });
+    $("#certificationTab").click(function() {
+        certification();
+        removeParamFromURL('consultation');
+    });
 
-        function getConsultationValueFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('consultation');
-        }
+    function getConsultationValueFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('consultation');
+    }
 
-        const consultationValue = getConsultationValueFromURL();
-        if (consultationValue) {
-            consultation();
-        } else {
-            $("#consultations").hide();
-        }
+    const consultationValue = getConsultationValueFromURL();
+    if (consultationValue) {
+        consultation();
+    } else {
+        $("#consultations").hide();
+    }
 
     $('#addClient').click(function() {
         axios.get('/client/create')
             .then(function(response) {
                 $('.modal-title').html("Add New Client");
+                $(".modal-dialog").removeClass("modal-md").addClass("modal-xl");
                 $('.modal-body').html(response.data);
                 $('#myModal').modal('show');
             })
@@ -257,10 +308,11 @@
             });
     })
 
-    function detailClient(id) {
-        axios.get('/client/detail/' + id)
+    function clientPayment(id) {
+        axios.get('/client/payment/' + id)
             .then(function(response) {
-                $('.modal-title').html("Detail Client");
+                $('.modal-title').html("Payment Detail");
+                $(".modal-dialog").removeClass("modal-xl").addClass("modal-md");
                 $('.modal-body').html(response.data);
                 $('#myModal').modal('show');
             })
@@ -269,51 +321,37 @@
             });
     }
 
-    function changeConsultantStatus(status, id) {
-        Swal.fire({
-            title: 'Are you sure you want to change the Client status?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Change'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                if (result.isConfirmed) {
-                    axios.post('/client/changeConsultantStatus/' + id, {
-                            status,
-                        }).then(() => {
-                            Swal.fire({
-                                title: 'Success',
-                                position: 'top-end',
-                                icon: 'success',
-                                text: 'Status Changed!',
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1600);
-                        })
-                        .catch((err) => {
-                            Swal.fire({
-                                title: 'Error',
-                                position: 'top-end',
-                                icon: 'error',
-                                text: err,
-                                showConfirmButton: false,
-                                timer: 1500
-                            });
-                        });
-                }
-            }
-        })
-    };
+    function clientProcess(id) {
+        axios.get('/client/stage/' + id)
+            .then(function(response) {
+                $('.modal-title').html("Consultation Stage");
+                $(".modal-dialog").removeClass("modal-md").addClass("modal-xl");
+                $('.modal-body').html(response.data);
+                $('#myModal').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+
+    function detailClient(id) {
+        axios.get('/client/detail/' + id)
+            .then(function(response) {
+                $('.modal-title').html("Detail Client");
+                $(".modal-dialog").removeClass("modal-md").addClass("modal-xl");
+                $('.modal-body').html(response.data);
+                $('#myModal').modal('show');
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
 
     function updClient(id) {
         axios.get('/client/getUpdate/' + id)
             .then(function(response) {
                 $('.modal-title').html("Update Data Client");
+                $(".modal-dialog").removeClass("modal-md").addClass("modal-xl");
                 $('.modal-body').html(response.data);
                 $('#myModal').modal('show');
             })
