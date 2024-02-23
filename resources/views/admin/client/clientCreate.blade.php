@@ -60,17 +60,95 @@
                 </div>
                 <div class="dropdown col-lg-4">
                     <select class="form-control custom-select" id="certBody">
-                        <option disabled selected>Certification Body</option>
-                        @foreach($certBody as $cert)
-                        <option>{{ $cert->name }}</option>
+                        <option disabled selected>Body</option>
+                        @foreach($certBody as $option)
+                        <option>{{ $option->name }}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice" placeholder="Input Price"></input>
+                    <input type="text" class="form-control" autocomplete="off" id="certPrice" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price']) ? $certificationProject['Certification Price'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-success mr-2" id="addFromCertification">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="C2" {{ isset($certificationProject['Certification Standard 2']) ? "" : "hidden" }}>
+            <div class="split-column">
+                <div class="dropdown col-lg-4">
+                    <select class="form-control custom-select" id="certStandard_2">
+                        <option disabled selected>Standard</option>
+                        @foreach($standard as $index => $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="dropdown col-lg-4">
+                    <select class="form-control custom-select" id="certBody_2">
+                        <option disabled selected>Body</option>
+                        @foreach($certBody as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" autocomplete="off" id="certPrice_2" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 2']) ? $certificationProject['Certification Price 2'] : "")}}"></input>
+                </div>
+                <div class="col-lg-1 add-btn">
+                    <button class="btn btn-danger mr-2" id="hideC2">-</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="C3" {{ isset($certificationProject['Certification Standard 3']) ? "" : "hidden" }}>
+            <div class="split-column">
+                <div class="dropdown col-lg-4">
+                    <select class="form-control custom-select" id="certStandard_3">
+                        <option disabled selected>Standard</option>
+                        @foreach($standard as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="dropdown col-lg-4">
+                    <select class="form-control custom-select" id="certBody_3">
+                        <option disabled selected>Body</option>
+                        @foreach($certBody as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" autocomplete="off" id="certPrice_3" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 3']) ? $certificationProject['Certification Price 3'] : "")}}"></input>
+                </div>
+                <div class="col-lg-1 add-btn">
+                    <button class="btn btn-danger mr-2" id="hideC3">-</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="C4" {{ isset($certificationProject['Certification Standard 4']) ? "" : "hidden" }}>
+            <div class="split-column">
+                <div class="dropdown col-lg-4">
+                    <select class="form-control custom-select" id="certStandard_4">
+                        <option disabled selected>Standard</option>
+                        @foreach($standard as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="dropdown col-lg-4">
+                    <select class="form-control custom-select" id="certBody_4">
+                        <option disabled selected>Body</option>
+                        @foreach($certBody as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-3">
+                    <input type="text" class="form-control" autocomplete="off" id="certPrice_4" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 4']) ? $certificationProject['Certification Price 4'] : "")}}"></input>
+                </div>
+                <div class="col-lg-1 add-btn">
+                    <button class="btn btn-danger mr-2" id="hideC4">-</button>
                 </div>
             </div>
         </div>
@@ -127,7 +205,7 @@
         <div class="form-group" id="consultationProject">
             <label for="surveillance_2">Project Detil</label>
             <div class="split-column">
-                <div class="dropdown col-lg-6">
+                <div class="dropdown col-lg-5">
                     <select class="form-control custom-select" id="consStandard">
                         <option disabled selected>Standard</option>
                         @foreach($standard as $option)
@@ -136,10 +214,64 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice" placeholder="Input Price"></input>
+                    <input type="text" class="form-control" autocomplete="off" id="consPrice" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price']) ? $consultationProject['Consultation Price'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
-                    <button class="btn btn-success mr-2" id="addFormConsultation">+</button>
+                    <button class="btn btn-success mr-2" id="addFromConsultation">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="p2" {{ isset($consultationProject['Consultation Standard 2']) ? "" : "hidden" }}>
+            <div class="split-column">
+                <div class="dropdown col-lg-5">
+                    <select class="form-control custom-select" id="consStandard_2">
+                        <option disabled selected>Standard</option>
+                        @foreach($standard as $index => $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control" autocomplete="off" id="consPrice_2" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 2']) ? $consultationProject['Consultation Price 2'] : "")}}"></input>
+                </div>
+                <div class="col-lg-1 add-btn">
+                    <button class="btn btn-danger mr-2" id="hideP2">-</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="p3" {{ isset($consultationProject['Consultation Standard 3']) ? "" : "hidden" }}>
+            <div class="split-column">
+                <div class="dropdown col-lg-5">
+                    <select class="form-control custom-select" id="consStandard_3">
+                        <option disabled selected>Standard</option>
+                        @foreach($standard as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control" autocomplete="off" id="consPrice_3" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 3']) ? $consultationProject['Consultation Price 3'] : "")}}"></input>
+                </div>
+                <div class="col-lg-1 add-btn">
+                    <button class="btn btn-danger mr-2" id="hideP3">-</button>
+                </div>
+            </div>
+        </div>
+        <div class="form-group" id="p4" {{ isset($consultationProject['Consultation Standard 4']) ? "" : "hidden" }}>
+            <div class="split-column">
+                <div class="dropdown col-lg-5">
+                    <select class="form-control custom-select" id="consStandard_4">
+                        <option disabled selected>Standard</option>
+                        @foreach($standard as $option)
+                        <option>{{ $option->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-lg-5">
+                    <input type="text" class="form-control" autocomplete="off" id="consPrice_4" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 4']) ? $consultationProject['Consultation Price 4'] : "")}}"></input>
+                </div>
+                <div class="col-lg-1 add-btn">
+                    <button class="btn btn-danger mr-2" id="hideP4">-</button>
                 </div>
             </div>
         </div>
@@ -219,63 +351,54 @@
         var counterConsultation = 2;
         var maxExecutionsConsultation = 5;
 
-        $('#addFormConsultation').on('click', function() {
+        $('#hideP2').on('click', function() {
+            $(`#p2`).prop('hidden', true);
+            counterConsultation--;
+            $('#addFromConsultation').prop('disabled', false);
+        });
+        $('#hideP3').on('click', function() {
+            $(`#p3`).prop('hidden', true);
+            counterConsultation--;
+            $('#addFromConsultation').prop('disabled', false);
+        });
+        $('#hideP4').on('click', function() {
+            $(`#p4`).prop('hidden', true);
+            counterConsultation--;
+            $('#addFromConsultation').prop('disabled', false);
+        });
+
+        $('#addFromConsultation').on('click', function() {
             if (counterConsultation < maxExecutionsConsultation) {
-                var htmlCode = `
-                    <div class="form-group" id="projDetil">
-                        <div class="split-column">
-                            <div class="dropdown col-lg-6">
-                                <select class="form-control custom-select" id="consStandard_${counterConsultation}">
-                                    <option disabled selected>Standard</option>
-                                    @foreach($standard as $option)
-                                    <option>{{ $option->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-lg-5">
-                                <input type="text" class="form-control" autocomplete="off" id="consPrice_${counterConsultation}" placeholder="Input Price"></input>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                $('#consultationProject').after(htmlCode);
+                var newId = `p${counterConsultation}`;
+                $(`#${newId}`).prop('hidden', false);
                 counterConsultation++;
             } else {
-                $('#addFormConsultation').prop('disabled', true);
+                $('#addFromConsultation').prop('disabled', true);
             }
         });
 
-
         var counterCertification = 2;
         var maxExecutionsCertification = 5;
+        $('#hideC2').on('click', function() {
+            $(`#C2`).prop('hidden', true);
+            counterCertification--;
+            $('#addFromCertification').prop('disabled', false);
+        });
+        $('#hideC3').on('click', function() {
+            $(`#C3`).prop('hidden', true);
+            counterCertification--;
+            $('#addFromCertification').prop('disabled', false);
+        });
+        $('#hideC4').on('click', function() {
+            $(`#C4`).prop('hidden', true);
+            counterCertification--;
+            $('#addFromCertification').prop('disabled', false);
+        });
+
         $('#addFromCertification').on('click', function() {
             if (counterCertification < maxExecutionsCertification) {
-                var htmlCode = `
-                    <div class="form-group">
-                        <div class="split-column">
-                            <div class="dropdown col-lg-4">
-                                <select class="form-control custom-select" id="certStandard_${counterCertification}">
-                                    <option disabled selected>Standard</option>
-                                    @foreach($standard as $option)
-                                    <option>{{ $option->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="dropdown col-lg-4">
-                                <select class="form-control custom-select" id="certBody_${counterCertification}">
-                                    <option disabled selected>Certification Body</option>
-                                    @foreach($certBody as $cert)
-                                    <option>{{ $cert->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-lg-3">
-                                <input type="text" class="form-control" autocomplete="off" id="certPrice_${counterCertification}" placeholder="Input Price">
-                            </div>
-                        </div>
-                    </div>
-                `;
-                $('#certificationProject').after(htmlCode);
+                var newId = `C${counterCertification}`;
+                $(`#${newId}`).prop('hidden', false);
                 counterCertification++;
             } else {
                 $('#addFromCertification').prop('disabled', true);
@@ -305,9 +428,6 @@
         const certStandard_4 = $('#certStandard_4').val();
         const certBody_4 = $('#certBody_4').val();
         const certPrice_4 = $('#certPrice_4').val();
-        const certStandard_5 = $('#certStandard_5').val();
-        const certBody_5 = $('#certBody_5').val();
-        const certPrice_5 = $('#certPrice_5').val();
         const brokerCertification = $('#brokerCertification').val();
         const brokerPriceCertification = $('#brokerPriceCertification').val();
 
@@ -324,8 +444,6 @@
         const consPrice_3 = $('#consPrice_3').val();
         const consStandard_4 = $('#consStandard_4').val();
         const consPrice_4 = $('#consPrice_4').val();
-        const consStandard_5 = $('#consStandard_5').val();
-        const consPrice_5 = $('#consPrice_5').val();
         const brokerConsultation = $('#brokerConsultation').val();
         const brokerPriceConsultation = $('#brokerPriceConsultation').val();
         const consultationStartDate = $('#consultationStartDate').val();

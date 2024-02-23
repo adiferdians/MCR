@@ -378,25 +378,39 @@
 
         var counterConsultation = 2;
         var maxExecutionsConsultation = 5;
+        if (!$('#p2').prop('hidden')) {
+            counterConsultation++;
+        }
+        if (!$('#p3').prop('hidden')) {
+            counterConsultation++;
+        }
+        if (!$('#p4').prop('hidden')) {
+            counterConsultation++;
+        }
 
         $('#hideP2').on('click', function() {
             $(`#p2`).prop('hidden', true);
+            $('#consStandard_2').val('Standard');
+            $('#consPrice_2').val('');
             counterConsultation--;
             $('#addFromConsultation').prop('disabled', false);
         });
         $('#hideP3').on('click', function() {
             $(`#p3`).prop('hidden', true);
+            $('#consStandard_3').val('Standard');
+            $('#consPrice_3').val('');
             counterConsultation--;
             $('#addFromConsultation').prop('disabled', false);
         });
         $('#hideP4').on('click', function() {
             $(`#p4`).prop('hidden', true);
+            $('#consStandard_4').val('Standard');
+            $('#consPrice_4').val('');
             counterConsultation--;
             $('#addFromConsultation').prop('disabled', false);
         });
 
         $('#addFromConsultation').on('click', function() {
-            console.log(counterConsultation);
             if (counterConsultation < maxExecutionsConsultation) {
                 var newId = `p${counterConsultation}`;
                 $(`#${newId}`).prop('hidden', false);
@@ -408,18 +422,37 @@
 
         var counterCertification = 2;
         var maxExecutionsCertification = 5;
+        if (!$('#C2').prop('hidden')) {
+            counterCertification++;
+        }
+        if (!$('#C3').prop('hidden')) {
+            counterCertification++;
+        }
+        if (!$('#C4').prop('hidden')) {
+            counterCertification++;
+        }
+
         $('#hideC2').on('click', function() {
             $(`#C2`).prop('hidden', true);
+            $('#certStandard_2').val('Standard');
+            $('#certBody_2').val('Body');
+            $('#certPrice_2').val('');
             counterCertification--;
             $('#addFromCertification').prop('disabled', false);
         });
         $('#hideC3').on('click', function() {
             $(`#C3`).prop('hidden', true);
+            $('#certStandard_3').val('Standard');
+            $('#certBody_3').val('Body');
+            $('#certPrice_3').val('');
             counterCertification--;
             $('#addFromCertification').prop('disabled', false);
         });
         $('#hideC4').on('click', function() {
             $(`#C4`).prop('hidden', true);
+            $('#certStandard_4').val('Standard');
+            $('#certBody_4').val('Body');
+            $('#certPrice_4').val('');
             counterCertification--;
             $('#addFromCertification').prop('disabled', false);
         });

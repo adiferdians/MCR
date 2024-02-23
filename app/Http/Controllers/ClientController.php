@@ -98,21 +98,21 @@ class ClientController extends Controller
 
 
             $projDetil = [
-                'Certificate Standard' => $certStandard,
-                'Certificate Body' => $certBody,
-                'Certificate Price' => $certPrice,
+                'Certification Standard' => $certStandard,
+                'Certification Body' => $certBody,
+                'Certification Price' => $certPrice,
 
-                'Certificate Standard 2' => $certStandard_2,
-                'Certificate Body 2' => $certBody_2,
-                'Certificate Price 2' => $certPrice_2,
+                'Certification Standard 2' => $certStandard_2,
+                'Certification Body 2' => $certBody_2,
+                'Certification Price 2' => $certPrice_2,
 
-                'Certificate Standard 3' => $certStandard_3,
-                'Certificate Body 3' => $certBody_3,
-                'Certificate Price 3' => $certPrice_3,
+                'Certification Standard 3' => $certStandard_3,
+                'Certification Body 3' => $certBody_3,
+                'Certification Price 3' => $certPrice_3,
 
-                'Certificate Body 4' => $certBody_4,
-                'Certificate Price 4' => $certPrice_4,
-                'Certificate Standard 4' => $certStandard_4,
+                'Certification Body 4' => $certBody_4,
+                'Certification Price 4' => $certPrice_4,
+                'Certification Standard 4' => $certStandard_4,
             ];
 
             $consPrice = $request->consPrice;
