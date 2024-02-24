@@ -281,20 +281,6 @@ class ClientController extends Controller
 
     function sendPayment(Request $request)
     {
-        $validate = Validator::make($request->all(), [
-            'dp1' => "integer",
-        ]);
-
-        if ($validate->fails()) {
-            return response()->json([
-                'success' => false,
-                'error' => [
-                    'message' => 'Validation Vailed!!',
-                    'details' => $validate->errors()->all()
-                ]
-            ], 422);
-        }
-
 
         DB::beginTransaction();
         try {

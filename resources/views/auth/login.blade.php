@@ -48,7 +48,7 @@
                     }
                 })
                 .then((result) => {
-                    window.location.href = "/dashboard";
+                    window.location.href = "/certificate";
                 })
             } else {
                 Swal.fire({

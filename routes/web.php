@@ -29,8 +29,6 @@ Route::get('out', [AuthController::class, 'out']);
 Route::post('login', [AuthController::class, 'auth']);
 
 Route::middleware(['auth'])->group(function () {
-    //Dashboard Page
-    Route::get('dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
     //certificate Page
     Route::get('certificate', [CertificateController::class, 'index']);
     Route::get('certificate/create', [CertificateController::class, 'create']);

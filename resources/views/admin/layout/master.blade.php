@@ -46,14 +46,6 @@
         <li class="nav-item nav-category">
           <span class="nav-link">Navigation</span>
         </li>
-        <li class="nav-item menu-items @yield('Dashboard')">
-          <a class="nav-link" href="/dashboard">
-            <span class="menu-icon">
-              <i class="mdi mdi-speedometer"></i>
-            </span>
-            <span class="menu-title">Dashboard</span>
-          </a>
-        </li>
         <li class="nav-item menu-items @yield('Certificate')">
           <a class="nav-link" href="/certificate">
             <span class="menu-icon">
