@@ -182,6 +182,8 @@
                                             }
                                             }
 
+                                            $lastKeyWithValueNotNull = substr($lastKeyWithValueNotNull, 0, strrpos($lastKeyWithValueNotNull, ' '));
+
                                             echo $lastKeyWithValueNotNull;
                                             } else {
                                             echo "Invalid JSON format";
