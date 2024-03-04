@@ -72,7 +72,7 @@
           </a>
           <div class="collapse @yield('Collapse')" id="ui-basic">
             <ul class="nav flex-column sub-menu">
-              <li class="nav-item"> <a class="nav-link @yield('Broker')" href="/broker">Boker</a></li>
+              <li class="nav-item"> <a class="nav-link @yield('Broker')" href="/broker">Broker</a></li>
               <li class="nav-item"> <a class="nav-link @yield('CertBody')" href="/certification-body">Certification Body</a></li>
               <li class="nav-item"> <a class="nav-link @yield('Role')" href="/role">Role</a></li>
               <li class="nav-item"> <a class="nav-link @yield('Standard')" href="/standard">Standard</a></li>

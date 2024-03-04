@@ -27,14 +27,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="atDate" value="{{(!empty($consultationStage['Awarness Training Date']) ? $consultationStage['Awarness Training Date'] : "")}}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="atPIC" placeholder="PIC" value="{{(!empty($consultationStage['Awarness Training PIC']) ? $consultationStage['Awarness Training PIC'] : "")}}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="atMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ (isset($consultationStage['Awarness Training Mandays']) && $consultationStage['Awarness Training Mandays'] == "12") ? "selected" : "" }}>Half Day</option>
-                            <option value="24" {{ (isset($consultationStage['Awarness Training Mandays']) && $consultationStage['Awarness Training Mandays'] == "24") ? "selected" : "" }}>One Day</option>
-                            <option value="48" {{ (isset($consultationStage['Awarness Training Mandays']) && $consultationStage['Awarness Training Mandays'] == "48") ? "selected" : "" }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="atMandays" value="{{ isset($consultationStage['Awarness Training Mandays']) ? $consultationStage['Awarness Training Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST1">-</button></td>
             </tr>
@@ -43,14 +36,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="igDate" value="{{(!empty($consultationStage['Information Gathering Date']) ? $consultationStage['Information Gathering Date'] : "")}}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="igPIC" placeholder="PIC" value="{{(!empty($consultationStage['Information Gathering PIC']) ? $consultationStage['Information Gathering PIC'] : "")}}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="igMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ (isset($consultationStage['Information Gathering Mandays']) && $consultationStage['Information Gathering Mandays'] == "12") ? "selected" : "" }}>Half Day</option>
-                            <option value="24" {{ (isset($consultationStage['Information Gathering Mandays']) && $consultationStage['Information Gathering Mandays'] == "24") ? "selected" : "" }}>One Day</option>
-                            <option value="48" {{ (isset($consultationStage['Information Gathering Mandays']) && $consultationStage['Information Gathering Mandays'] == "48") ? "selected" : "" }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="igMandays" value="{{ isset($consultationStage['Information Gathering Mandays']) ? $consultationStage['Information Gathering Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST2">-</button></td>
             </tr>
@@ -59,14 +45,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="iatDate" value="{{(!empty($consultationStage['Internal Audit Training Date']) ? $consultationStage['Internal Audit Training Date'] : "")}}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="iatPIC" placeholder="PIC" value="{{(!empty($consultationStage['Internal Audit Training PIC']) ? $consultationStage['Internal Audit Training PIC'] : "")}}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="iatMandays" name="iatMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ (isset($consultationStage['Internal Audit Training Mandays']) && $consultationStage['Internal Audit Training Mandays'] == "12") ? "selected" : "" }}>Half Day</option>
-                            <option value="24" {{ (isset($consultationStage['Internal Audit Training Mandays']) && $consultationStage['Internal Audit Training Mandays'] == "24") ? "selected" : "" }}>One Day</option>
-                            <option value="48" {{ (isset($consultationStage['Internal Audit Training Mandays']) && $consultationStage['Internal Audit Training Mandays'] == "48") ? "selected" : "" }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="iatMandays" value="{{ isset($consultationStage['Internal Audit Training Mandays']) ? $consultationStage['Internal Audit Training Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST3">-</button></td>
             </tr>
@@ -75,14 +54,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="iaDate" value="{{ !empty($consultationStage['Internal Audit Date']) ? $consultationStage['Internal Audit Date'] : '' }}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="iaPIC" placeholder="PIC" value="{{ !empty($consultationStage['Internal Audit PIC']) ? $consultationStage['Internal Audit PIC'] : '' }}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="iaMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ isset($consultationStage['Internal Audit Mandays']) && $consultationStage['Internal Audit Mandays'] == "12" ? 'selected' : '' }}>Half Day</option>
-                            <option value="24" {{ isset($consultationStage['Internal Audit Mandays']) && $consultationStage['Internal Audit Mandays'] == "24" ? 'selected' : '' }}>One Day</option>
-                            <option value="48" {{ isset($consultationStage['Internal Audit Mandays']) && $consultationStage['Internal Audit Mandays'] == "48" ? 'selected' : '' }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="iaMandays" value="{{ isset($consultationStage['Internal Audit Mandays']) ? $consultationStage['Internal Audit Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST4">-</button></td>
             </tr>
@@ -91,14 +63,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="socDate" value="{{(!empty($consultationStage['Socialization Date']) ? $consultationStage['Socialization Date'] : "")}}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="socPIC" placeholder="PIC" value="{{(!empty($consultationStage['Socialization PIC']) ? $consultationStage['Socialization PIC'] : "")}}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="socMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ (isset($consultationStage['Socialization Mandays']) && $consultationStage['Socialization Mandays'] == "12") ? "selected" : "" }}>Half Day</option>
-                            <option value="24" {{ (isset($consultationStage['Socialization Mandays']) && $consultationStage['Socialization Mandays'] == "24") ? "selected" : "" }}>One Day</option>
-                            <option value="48" {{ (isset($consultationStage['Socialization Mandays']) && $consultationStage['Socialization Mandays'] == "48") ? "selected" : "" }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="socMandays" value="{{ isset($consultationStage['Socialization Mandays']) ? $consultationStage['Socialization Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST5">-</button></td>
             </tr>
@@ -107,14 +72,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="eaDate" value="{{(!empty($consultationStage['External Audit Date']) ? $consultationStage['External Audit Date'] : "")}}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="eaPIC" placeholder="PIC" value="{{(!empty($consultationStage['External Audit PIC']) ? $consultationStage['External Audit PIC'] : "")}}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="eaMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ (isset($consultationStage['External Audit Mandays']) && $consultationStage['External Audit Mandays'] == "12") ? "selected" : "" }}>Half Day</option>
-                            <option value="24" {{ (isset($consultationStage['External Audit Mandays']) && $consultationStage['External Audit Mandays'] == "24") ? "selected" : "" }}>One Day</option>
-                            <option value="48" {{ (isset($consultationStage['External Audit Mandays']) && $consultationStage['External Audit Mandays'] == "48") ? "selected" : "" }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="eaMandays" value="{{ isset($consultationStage['External Audit Mandays']) ? $consultationStage['External Audit Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST6">-</button></td>
             </tr>
@@ -123,14 +81,7 @@
                 <td><input type="date" class="form-control" autocomplete="off" id="doneDate" value="{{(!empty($consultationStage['Done Date']) ? $consultationStage['Done Date'] : "")}}"></td>
                 <td><input type="text" class="form-control" autocomplete="off" id="donePIC" placeholder="PIC" value="{{(!empty($consultationStage['Done PIC']) ? $consultationStage['Done PIC'] : "")}}"></td>
                 <td>
-                    <div class="dropdown">
-                        <select class="form-control custom-select" id="doneMandays">
-                            <option disabled selected>Select a Mandays</option>
-                            <option value="12" {{ (isset($consultationStage['Done Mandays']) && $consultationStage['Done Mandays'] == "12") ? "selected" : "" }}>Half Day</option>
-                            <option value="24" {{ (isset($consultationStage['Done Mandays']) && $consultationStage['Done Mandays'] == "24") ? "selected" : "" }}>One Day</option>
-                            <option value="48" {{ (isset($consultationStage['Done Mandays']) && $consultationStage['Done Mandays'] == "48") ? "selected" : "" }}>Two Day</option>
-                        </select>
-                    </div>
+                    <input type="number" class="form-control" autocomplete="off" id="doneMandays" value="{{ isset($consultationStage['Done Mandays']) ? $consultationStage['Done Mandays'] : "" }}">
                 </td>
                 <td><button class="btn btn-danger mr-2" id="closeST7">-</button></td>
             </tr>

@@ -193,7 +193,7 @@
                 </tr>
                 <tr>
                     <td style="width: 150px;">Broker Price</td>
-                    <td>{{ $consultation ? $consultation->broker_price : ''}}</td>
+                    <td>{{ $consultation ? 'Rp ' . number_format($consultation->broker_price, 0, ',', '.') : '' }}</td>
                 </tr>
                 @endif
             </tbody>

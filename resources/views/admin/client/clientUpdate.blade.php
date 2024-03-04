@@ -67,7 +67,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price']) ? $certificationProject['Certification Price'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price']) ? $certificationProject['Certification Price'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-success mr-2" id="addFromCertification">+</button>
@@ -94,7 +94,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice_2" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 2']) ? $certificationProject['Certification Price 2'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice_2" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 2']) ? $certificationProject['Certification Price 2'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideC2">-</button>
@@ -120,7 +120,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice_3" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 3']) ? $certificationProject['Certification Price 3'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice_3" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 3']) ? $certificationProject['Certification Price 3'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideC3">-</button>
@@ -146,7 +146,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice_4" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 4']) ? $certificationProject['Certification Price 4'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice_4" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 4']) ? $certificationProject['Certification Price 4'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideC4">-</button>
@@ -187,7 +187,7 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" autocomplete="off" id="brokerPriceCertification" value="{{ $certification ? $certification->broker_price : ''}}" placeholder="Input Price"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="brokerPriceCertification" value="{{ $certification ? $certification->broker_price : ''}}" placeholder="Input Price"></input>
                 </div>
             </div>
         </div>
@@ -214,7 +214,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price']) ? $consultationProject['Consultation Price'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price']) ? $consultationProject['Consultation Price'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-success mr-2" id="addFromConsultation">+</button>
@@ -233,7 +233,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice_2" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 2']) ? $consultationProject['Consultation Price 2'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice_2" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 2']) ? $consultationProject['Consultation Price 2'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideP2">-</button>
@@ -251,7 +251,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice_3" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 3']) ? $consultationProject['Consultation Price 3'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice_3" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 3']) ? $consultationProject['Consultation Price 3'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideP3">-</button>
@@ -269,7 +269,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice_4" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 4']) ? $consultationProject['Consultation Price 4'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice_4" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 4']) ? $consultationProject['Consultation Price 4'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideP4">-</button>
@@ -297,7 +297,7 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" autocomplete="off" id="brokerPriceConsultation" placeholder="Input Price" value="{{ $consultation ? $consultation->broker_price : ''}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="brokerPriceConsultation" placeholder="Input Price" value="{{ $consultation ? $consultation->broker_price : ''}}"></input>
                 </div>
             </div>
         </div>
@@ -466,7 +466,39 @@
                 $('#addFromCertification').prop('disabled', true);
             }
         });
+
+        // Memanggil fungsi applyRupiahFormatting saat halaman dimuat
+        $('.rupiah-input').each(function() {
+            applyRupiahFormatting(this);
+        });
+
+        // Event listener untuk memastikan input hanya menerima integer
+        $('.rupiah-input').on('keypress', function(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                e.preventDefault();
+            }
+        });
+
+        // Event listener untuk memformat input saat input berubah
+        $('.rupiah-input').on('input', function() {
+            applyRupiahFormatting(this);
+        });
     });
+
+    function formatToRupiah(angka) {
+        if (!angka) return ''; // Jika tidak ada angka, kembalikan string kosong
+        var reverse = angka.toString().split('').reverse().join(''),
+            ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+        return 'Rp ' + ribuan;
+    }
+
+    // Function to apply Rupiah formatting on input change
+    function applyRupiahFormatting(input) {
+        var value = input.value.replace(/\D/g, ''); // Hapus semua karakter non-angka
+        input.value = formatToRupiah(value);
+    }
 
     $('#send').click(function() {
         const id = $('#compID').val();

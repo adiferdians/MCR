@@ -48,7 +48,7 @@
             <input type="date" class="form-control" autocomplete="off" id="startDate"></input>
         </div>
         <div class="form-group" id="certificationProject">
-            <label for="surveillance_2">Project Detil</label>
+            <label for="surveillance_2">Project Detail</label>
             <div class="split-column">
                 <div class="dropdown col-lg-4">
                     <select class="form-control custom-select" id="certStandard">
@@ -67,7 +67,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price']) ? $certificationProject['Certification Price'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price']) ? $certificationProject['Certification Price'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-success mr-2" id="addFromCertification">+</button>
@@ -93,7 +93,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice_2" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 2']) ? $certificationProject['Certification Price 2'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice_2" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 2']) ? $certificationProject['Certification Price 2'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideC2">-</button>
@@ -119,7 +119,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice_3" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 3']) ? $certificationProject['Certification Price 3'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice_3" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 3']) ? $certificationProject['Certification Price 3'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideC3">-</button>
@@ -145,7 +145,7 @@
                     </select>
                 </div>
                 <div class="col-lg-3">
-                    <input type="text" class="form-control" autocomplete="off" id="certPrice_4" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 4']) ? $certificationProject['Certification Price 4'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="certPrice_4" placeholder="Input Price" value="{{(!empty($certificationProject['Certification Price 4']) ? $certificationProject['Certification Price 4'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideC4">-</button>
@@ -187,7 +187,7 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" autocomplete="off" id="brokerPriceCertification" placeholder="Input Price" hidden></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="brokerPriceCertification" placeholder="Input Price" hidden></input>
                 </div>
             </div>
         </div>
@@ -203,7 +203,7 @@
             <input type="text" class="form-control" autocomplete="off" id="consProjName" placeholder="Project Name"></input>
         </div>
         <div class="form-group" id="consultationProject">
-            <label for="surveillance_2">Project Detil</label>
+            <label for="surveillance_2">Project Detail</label>
             <div class="split-column">
                 <div class="dropdown col-lg-5">
                     <select class="form-control custom-select" id="consStandard">
@@ -214,7 +214,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price']) ? $consultationProject['Consultation Price'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price']) ? $consultationProject['Consultation Price'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-success mr-2" id="addFromConsultation">+</button>
@@ -232,7 +232,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice_2" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 2']) ? $consultationProject['Consultation Price 2'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice_2" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 2']) ? $consultationProject['Consultation Price 2'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideP2">-</button>
@@ -250,7 +250,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice_3" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 3']) ? $consultationProject['Consultation Price 3'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice_3" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 3']) ? $consultationProject['Consultation Price 3'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideP3">-</button>
@@ -268,7 +268,7 @@
                     </select>
                 </div>
                 <div class="col-lg-5">
-                    <input type="text" class="form-control" autocomplete="off" id="consPrice_4" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 4']) ? $consultationProject['Consultation Price 4'] : "")}}"></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="consPrice_4" placeholder="Input Price" value="{{(!empty($consultationProject['Consultation Price 4']) ? $consultationProject['Consultation Price 4'] : "")}}"></input>
                 </div>
                 <div class="col-lg-1 add-btn">
                     <button class="btn btn-danger mr-2" id="hideP4">-</button>
@@ -296,7 +296,7 @@
                     </select>
                 </div>
                 <div class="col-lg-6">
-                    <input type="text" class="form-control" autocomplete="off" id="brokerPriceConsultation" placeholder="Input Price" hidden></input>
+                    <input type="text" class="form-control rupiah-input" autocomplete="off" id="brokerPriceConsultation" placeholder="Input Price" hidden></input>
                 </div>
             </div>
         </div>
@@ -404,7 +404,33 @@
                 $('#addFromCertification').prop('disabled', true);
             }
         });
+
+        $('.rupiah-input').on('input', function() {
+            applyRupiahFormatting(this);
+        });
+
+        // Memastikan input hanya menerima integer
+        $('.rupiah-input').on('keypress', function(e) {
+            var charCode = e.which ? e.which : e.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                e.preventDefault();
+            }
+        });
     });
+
+    // Function to convert number to Rupiah currency format
+    function formatToRupiah(angka) {
+        var reverse = angka.toString().split('').reverse().join(''),
+            ribuan = reverse.match(/\d{1,3}/g);
+        ribuan = ribuan.join('.').split('').reverse().join('');
+        return 'Rp ' + ribuan;
+    }
+
+    // Function to apply Rupiah formatting on input change
+    function applyRupiahFormatting(input) {
+        var value = input.value.replace(/\D/g, ''); // Hapus semua karakter non-angka
+        input.value = formatToRupiah(value);
+    }
 
     $('#send').click(function() {
         const companyName = $('#compName').val();
